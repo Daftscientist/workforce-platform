@@ -34,7 +34,7 @@ Images referenced throughout are in [`public/images/`](./public/images/).
 
 The same content is served as a Next.js static site on Cloudflare Pages, with a sticky table of contents, VS Code Dark+ syntax highlighting, and proper image/table rendering.
 
-👉 **[Open the write-up site](https://cascade-nea-site.pages.dev/)**
+👉 **[Open the write-up site](https://nea.daftscientist.dev/)**
 
 ---
 
@@ -54,11 +54,7 @@ The same content is served as a Next.js static site on Cloudflare Pages, with a 
 │
 ├── app/              # Next.js App Router — the site that renders content/
 ├── components/       # React components (SectionView, MarkdownRenderer)
-├── lib/              # Content reader and TOC extractor
-│
-└── .github/
-    └── workflows/
-        └── deploy.yml  # Auto-deploys the site to Cloudflare Pages on push to main
+└── lib/              # Content reader and TOC extractor
 ```
 
 ---
@@ -72,21 +68,6 @@ npm install
 npm run dev
 # Open http://localhost:3000
 ```
-
----
-
-## Deploying to Cloudflare Pages
-
-The included GitHub Actions workflow builds and deploys automatically on every push to `main`.
-
-To enable it, add two secrets to the GitHub repo (**Settings → Secrets and variables → Actions**):
-
-| Secret | Where to find it |
-|---|---|
-| `CLOUDFLARE_API_TOKEN` | Cloudflare dashboard → My Profile → API Tokens (use the *Edit Cloudflare Workers* template, or create a custom token with *Cloudflare Pages: Edit* permission) |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → Workers & Pages → Overview (shown in the right sidebar) |
-
-Make sure a Cloudflare Pages project named **`cascade-nea-site`** already exists (create it once via the dashboard, then the workflow takes over for all future deploys).
 
 ---
 
