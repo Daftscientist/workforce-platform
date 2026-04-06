@@ -2,8 +2,8 @@ import "./globals.css";
 
 export const metadata = {
   title: {
-    template: '%s - Daft.',
-    default: 'Integrated Workforce Management Platform - Daft.',
+    template: '%s - NEA | Daft.',
+    default: 'NEA | Daft.',
   },
   description: "A system for rota scheduling, time tracking, and payroll automation — NEA write-up by Leo Johnston",
   icons: {
