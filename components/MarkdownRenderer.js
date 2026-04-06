@@ -17,9 +17,15 @@ export default function MarkdownRenderer({ content }) {
       ]}
       components={{
         img({ src, alt }) {
-          const resolvedSrc = src?.startsWith('/images/')
-            ? `${BASE}${src}`
-            : src;
+          // Normalise both legacy absolute paths (/images/x) and the new
+          // markdown-viewer-friendly relative paths (../public/images/x)
+          // so they always resolve to the correct /images/x URL in the web app.
+          let resolvedSrc = src;
+          if (src?.startsWith('../public/images/')) {
+            resolvedSrc = `${BASE}/images/${src.slice('../public/images/'.length)}`;
+          } else if (src?.startsWith('/images/')) {
+            resolvedSrc = `${BASE}${src}`;
+          }
           return (
             <img
               src={resolvedSrc}

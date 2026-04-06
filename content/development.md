@@ -118,7 +118,7 @@ Furthermore, though my inclusion of error handling in the client-side prototype,
             });
 ```
 
-![image](/images/rId27.png)
+![image](../public/images/rId27.png)
 
 After catching said error, it handles it gracefully, pushing an error message to the console and replacing the <p id="message">Loading...</p> text field with an error message. Notifying the user and preventing total usability of the webpage.
 
@@ -180,7 +180,7 @@ function ClockInExampleComponent() {
 export default ClockInExampleComponent;
 ```
 
-![image](/images/rId28.gif)
+![image](../public/images/rId28.gif)
 
 In the above example, the state of a user’s status – being either clocked in or out – can be seen to be managed through the `useState` hook, imported into the component for use through the line `import { useState } from "react";`. This allows data to be stored and updated without direct DOM manipulation. When the data’s value changes, React automatically re-renders only the effected component – in this case to switch the buttons label `{clockedIn ? "Clock Out" : "Clock In"}` and to switch the text shown in the ‘current status’ paragraph element `{clockedIn ? "Clocked In" : "Clocked Out"}`. Furthermore, these two implementations of text switching between different values, are an example of an additional React feature – inline JSX – allowing for logical decision making to take place inline, alongside traditional HTML tags. In this case the button element triggers the state change through the function `toggleClockedIn` attributed to the button through the React event `onClick`. This function, as seen in the line `setClockedIn(prevClockedIn => !prevClockedIn);` updates the state using the `setClockedIn` function defined alongside the state data above, a further React feature, through its use of the `!` operator, producing the opposite Boolean value to that of the current saved state. 
 
@@ -233,11 +233,11 @@ In this example, both useEffect and the previously covered useState are imported
 
 Figure 3 below presents the three previously discussed runtime states of the programmed example above, demonstrating the user interfaces capability in responding to loading, successful data retrieval and server error conditions.
 
-![image](/images/rId30.png)
+![image](../public/images/rId30.png)
 
-![image](/images/rId31.png)
+![image](../public/images/rId31.png)
 
-![image](/images/rId32.png)
+![image](../public/images/rId32.png)
 
 This programmed example above highlights React’s support for asynchronous data fetching and conditional rendering, allowing the frontend to remain responsive and informative during rare cases of backend failure. It also further illustrates benefit of its separation of concerns, with the backend communication logic isolated within the effect hook and presentation logic handled through the JSX response – an implementation of this isolation in a much more efficient method compared with previously considered options. 
 
@@ -389,7 +389,7 @@ Firstly, I needed to install the external library, SQLAlchemy, to use throughout
 
 In starting to make use of this library and to initialise the database, a project directory was required to be built out. Inside the root of the project, I created two sub-directories, Frontend and Backend – allowing me to further solidify the abstraction of the two separate aspects of the project. Following this, inside the Backend directory I created an app.py, while empty this file enabled me to plan the structure of the project from the beginning. I then proceeded to create a file called db.py – in which I was finally able to start database initiation. Inside this file, I proceeded to import the required classes and functions provided by SQLAlchemy that were necessary to facilitate the initialisation of the database, the same code that was demonstrated in the technical prototyping phase when testing the validity of SQLAlchemy for the project. This code, as seen in figure 14 below, imports both the `create_engine `function and the `sessionmaker` class and uses them in the creation of the database, passing in the database URL as fetched through environment variables or as seen to default to `“sqlite:///rota.db”`.
 
-![image](/images/rId33.png)
+![image](../public/images/rId33.png)
 
 *Figure 14 - db.py file showing the creation of the database engine and local session of the database.*
 
@@ -399,11 +399,11 @@ As a result of the foundation of the database access having been created, I then
 
 In starting to create these tables, I created a new file, models.py, enabling me to keep my database models separate from other parts of the code. To create the basis of this file prior to the creation of these tables/models I was required to import all the datatypes I would need (as outlined in the external storage section) and the base derivative class – both provided by SQLAlchemy. I then proceeded to create a variable called `Base` to easily access the declarative base class required to inform SQLAlchemy that my classes were to be converted to SQL tables, as seen below in Figure 15.
 
-![image](/images/rId34.png)
+![image](../public/images/rId34.png)
 
 *Figure 15 - models.py file showing the importation of necessary data types and declarative base from SQLAlchemy.*
 
-![image](/images/rId35.png)
+![image](../public/images/rId35.png)
 
 After this, I proceeded to convert the table designs from the external storage design section into SQLAlchemy compatible classes to be turned into database tables. The overall process consisted of the creation of a new child class with a descriptive title and the inclusion of the `Base` variable in the class declaration. Following this, in the body of the class a `__tablename__` variable was required to be set, indicating to SQLAlchemy the exact table name to set. Then finally, using the data classes provided by SQLAlchemy I was able to create new variables inside the class consisting of the field name (the variable declaration) and the datatype (as the variable definition) with any associated configuration options being available through the parameters of the datatype itself. I then went on to implement this for every table I outlined in the previous sections, below the Employee class can be seen in figure 16. 
 
@@ -413,7 +413,7 @@ I then imported the `SessionLocal` and all database models into my app.py file, 
 
 #### Testing
 
-![image](/images/rId36.png)
+![image](../public/images/rId36.png)
 
 To test this iteration, I ran the `app.py` file verifying the creation of the database tables and checking to make sure they were composed as expected. Then proceeded to add some placeholder data into the table and verify that insertion and selection operations to the table occurred as expected. The code to test this implementation can be seen below in figure 17. 
 
@@ -425,19 +425,19 @@ This second iteration aims to fulfil the implementation of MUST requirement 1, t
 
 I started this iteration by laying the groundwork for the implementation of routes, as this was an essential prerequisite to authentication. As per previous technical research prototypes, I initialised the Sanic application in the app.py file, creating the Sanic application and enabling the running of the server through `app.run`. I then proceeded to make use of the `sanic_cors` library, which was included with the install of Sanic itself, allowing me to add `CORS` rules to the Sanic application. Following this, I then registered a Sanic blueprint, allowing me to define and contain my API routes in a file separate to app.py, increasing modularity and separation of concerns. This can be seen below in figure 18.
 
-![image](/images/rId37.png)
+![image](../public/images/rId37.png)
 
 *Figure 18 - App.py file initialising the Sanic application, starting the server, configuring CORS and registering the routes blueprint.*
 
 As a result of my implementation of the blueprint, a routes.py file had to be created, containing the base code to create said blueprint and enabling the import and reference to the blueprint called API in `app.py` to function correctly. This can be seen below in figure 19.
 
-![image](/images/rId38.png)
+![image](../public/images/rId38.png)
 
 *Figure 19 - Creation and initilisation of the route blueprint in routes.py*
 
 Now my initialisation of the Sanic app and creation of route handlers had been finalised, I moved on to creating helper functions and decorators to produce the desired requirements and aims previously outlined. 
 
-![image](/images/rId39.png)
+![image](../public/images/rId39.png)
 
 In keeping with my requirement of separation of concerns, I chose to separate the authentication management system from the routes themselves and created a new `auth.py` file and imported this in my `routes.py` file, enabling it for subsequent use in this prototype. In the `auth.py` file, I initially created two helper functions, `hash_password` and `verify_password`, enabling easy access to hash functionality. These functions made use of hashing algorithms provided by `bycrypt`, and through their implementation inside these functions bundled configuration options automatically – reducing the chances of issues arising of mismatched hash configurations. 
 
@@ -445,49 +445,49 @@ In keeping with my requirement of separation of concerns, I chose to separate th
 
 I then proceeded to create two further helper functions for use in this file that enable the encoding and decoding of session JWT tokens, `create_jwt` and `decode_jwt`. Allowing me to standardise the creation of my sessions. When creating these functions, I declared three constant variables to define the JWT secret (used to encode the data), the JWT algorithm (the type of encoding I required) and the session expiry – with 3600 seconds and HS256 being the respective session expiry time and encoding algorithm.
 
-![image](/images/rId40.png)
+![image](../public/images/rId40.png)
 
 *Figure 21 - Snippet of code showing the JWT encoding and decoding algorithms and their constant variables.*
 
-![image](/images/rId41.png)
+![image](../public/images/rId41.png)
 
 Following this, I then created a `get_current_user` helper function, enabling me to fetch the current user info from the request headers, making use of the `decode_jwt` function.
 
 *Figure 22 - The `get_current_user` function in auth.py requesting the session token from the request headers and decoding it.*
 
-![image](/images/rId42.png)
+![image](../public/images/rId42.png)
 
 I then proceeded to create three decorator functions to be placed above route declarations in the route.py file, `@require_auth`, `@require_manager` and `@require_self_or_manager`. The first restricting access to the route if a valid session token is not included in the request, the second restricting access to the route if the user does not have managerial permissions, and the only allowing access to the route if the user is a manager or if the user if requesting their own data. These three decorator functions, which were able to be used in conjunction with each other, enable the easy restriction of HTTP routes per predefined cases – reducing the amount of repeated code needed.
 
 After the creation of these base authentication features, I proceeded to the core implementation of a Login endpoint, which aimed to take in an email and password in the request body, verify the email and password against predefined security and data type standards and return either a success response and the JWT session token or a failure response.
 
-![image](/images/rId43.png)
+![image](../public/images/rId43.png)
 
 Therefore, to implement this route, I created a new route handler in routes.py (only accepting POST requests), initialising the route similarly to the way in which I had done in technical prototyping, but rather than be derived from the app class – derived from the api blueprint we defined previously. I began by converting the body of the request into JSON format, then verifying the presence of an email and password. Proceeding this I initiated an instance of the previously created database session, querying the users email against the Employee table, and returning Invalid Credentials if the query fails to return user data. Then, once the user is deemed to exist, and the provided password has been compared to the hash stored in the database using the verify_password function, I make use of the create_jwt function, close the database session and return the newly created session token and associated user data through a JSON response.
 
-![image](/images/rId44.png)
+![image](../public/images/rId44.png)
 
-![image](/images/rId45.png)
+![image](../public/images/rId45.png)
 
 As a result of the completion of the backend routes required to facilitate authentication functionality, I then moved on to the implementation of the login page on the frontend side of the project. Aiming to follow the structure of the designs outlined in the screen design section, I initialised a new React project and installed react-router-dom, a library that builds on the capabilities of React, and Tailwind CSS, an easy-to-use wrapper over CSS – allowing for styles to be implemented inline with HTML tags. I then initiated the react router in the App.jsx file in the newly populated frontend directory (files auto populated by the react setup process), and defined my initial route ‘/login’, and linked it to a newly created Login component in the newly created pages directory. 
 
-![image](/images/rId46.png)
+![image](../public/images/rId46.png)
 
-![image](/images/rId47.png)
+![image](../public/images/rId47.png)
 
 As a result of these frontend structural developments, I proceeded to then create a new directory in the frontend section of the project called context, containing a new file called AuthContext.js – a file to store, define and manage the authentication and state of users throughout the application. In this file I then defined a new constant of AuthContext, a derivative of the React provided createContext function, created and exported a useAuth function, and again created and exported a AuthProvider component. This AuthProvider component, which was wrapped around the element tree of the application (see Figure 27), loads the user from its session token saved in LocalStorage on page load, stores the state of the currently logged in user in useState hooks, and provides helper functions (login and logout) to facilitate the destruction and creation of LocalStorage values. 
 
-![image](/images/rId48.png)
+![image](../public/images/rId48.png)
 
 Moving back to the Login component (located at pages/Login.jsx), the next task was to implement the UI of the login page. I started by creating a creating an invisable box that flexed to the size of its contents with internal padding, then filled this with two horizontally centered items an h1 title stating ‘Integrated Workforce Management Platform’, and a p tagline stating ‘Professional Workforce Management System’.
 
-![image](/images/rId49.png)
+![image](../public/images/rId49.png)
 
-![image](/images/rId50.png)
+![image](../public/images/rId50.png)
 
 Following this, I then created a white card with outline shadow (see figure 30), with a title of ‘Sign In’ in large text. After this, I created the HTML form, and a placeholder function called handleSubmit in its onSubmit attribute, with a username text field and a password password field, both including a callback function handleChange in their onChange attributes. Below these, I added a blue button with the text ’Login’ and a blue ‘Forgot Your Password’ hyperlink.  You can see these changes aside in figure 31.
 
-![image](/images/rId51.png)
+![image](../public/images/rId51.png)
 
 Following this completion of the implementation of the UI design, the functionality behind the page was required to be implemented. Beginning with the creation of these event related functions, I created a handle data change function that stores the new field data in a useState hook called formData in a key value pair – with the field name as the key and the new content as the value. This allowed me to have stored copies of the field data to use when creating the handleSubmit function, which after preventing the default action of HTML forms, set a loading state (indicating to the button content to convert to an animated spinner) and dispatch an asyncronous POST request using the native JavaScript fetch API to the ‘/api/login’ backend endpoint I recently created, populating the body with a string version of the key-value store that is formData. Following this, I added an if clause, checking if the response was successful, in which case it would make use of the previously created useAuth custom hook and save the provided data to global state via the login function assosiated with it, then subsequently perform a redirect to ‘/home’. And in the case of an error arrising, a modal would be revealed, stating ‘Invalid username or password. Please check your credentials and try again.’ In large text with a blue button below with the text ‘Try Again’.
 
@@ -497,25 +497,25 @@ To test this iteration I created various situations in which I could predict the
 
 Firstly, I provided the login page with the credentials that were present in the Employee database. I excepted a successful request presenting the HTTP status code of 200, the recieval of the data assosiated with the user, the recieval of a session JWT token and a UI redirection to `‘/home’.` The Figures below (33 & 34) capture both the network response and resultant data provided by the API, proving the system to function as intended.
 
-![image](/images/rId52.png)
+![image](../public/images/rId52.png)
 
-![image](/images/rId53.png)
+![image](../public/images/rId53.png)
 
-![image](/images/rId54.png)
+![image](../public/images/rId54.png)
 
 Following this, the next test I shall produce will input invalid credentials into the login page, spesifically an incorrect password in the password field. This should produce a 401 error in the network tab with the response stating ‘Invalid Credentials’, and the UI should reveal an error modal. The three figures below (35, 36 & 37) show evidence of the network response, response body and UI response – showcasing the system functions as intended.
 
-![image](/images/rId55.png)
+![image](../public/images/rId55.png)
 
-![image](/images/rId56.png)
+![image](../public/images/rId56.png)
 
-![image](/images/rId57.png)
+![image](../public/images/rId57.png)
 
 For the final test, I shall create a mockup protected route making use of the @require_manager decorator I previously created. This route shall be tested in three ways, when lacking a token, when possessing only an employee token and when possessing a manager token. The expected behaviour is as follows: when lacking a session token, the route should respond with a 401 status code, when possessing a session token without managerial permissions the route should respond with a 403 status code and finally when possessing a session token with managerial permissions the route should respond with a 200 status code.  The three figures below, (38, 39 & 40) show evidence of these network responses for the various situations and directly prove the system functioning as intended during development. 
 
-![image](/images/rId58.png)
+![image](../public/images/rId58.png)
 
-![image](/images/rId59.png)
+![image](../public/images/rId59.png)
 
 Iteration 3: M1, M19, M15, M18 – Authentication: Password Reset
 
@@ -523,93 +523,93 @@ The goal of this iteration is to build upon the previously started authenticatio
 
 Due to the `ResetPasswordToken` model and table already existing due to implementation in the initial iteration, the initial focus of this iteration was to create the routes required for this functionality to be accessible. I identified 3 main routes needed to implement this functionality: `‘/password-reset/request’`, `‘/reset-password/<token>’`, and `‘/password-reset/confirm/<token>’`.
 
-![image](/images/rId60.png)
+![image](../public/images/rId60.png)
 
 The first route (see Figure 41), a POST route in the routes.py file, requiring an email address in the body, initially queries the database Employees table to verify the existence of a user with the provided email address. If no user is found, the exact same success response is returned as if the action had successfully occurred – preventing hackers from identifying users through this medium. Once the validity of the user has been confirmed, I moved on to generating a secure and unique reset token – while there were many methods for this (including reusing existing JWT code for this purpose) – I wanted the assurance of a URL-safe token, and therefore chose to use the built-in Python library secrets and their token_urlsafe function, which allowed me to be assured that the token that was produced was compatible with my use case and to select the amount of bytes of the token itself. I then proceeded to invalidate any existing password reset tokens associated with the user through a filtered update query of the PasswordResetTokens, then subsequently created a new reset token record with the newly generated token, employee id and expiry time (the current time plus 30 minutes).
 
 Following this I was required to present the token reset link to the user, through an email – and as a result decided to create a helper function to dispatch emails uniformly across the project making use of the SMTP credentials provided by the configurable settings system table.
 
-![image](/images/rId61.png)
+![image](../public/images/rId61.png)
 
 In the same file, I created a new helper function called `send_html_email`, which utilizes the built in `email` library in Python, specifically `email.mime.multipart.MIMEMultipart`, which enabled me – after I queried the Settings table for SMTP settings and printed a console error if these values were unset – to directly form the email from the provided parameters `(subject, html_content, recipients, text_fallback)` and dispatch the email according to the settings saved in the `Settings` table of the database.
 
 Due to this function lacking the functionality to directly generate email content, I was required to store and generate these emails myself – and as a result I created a new file called email_templates.py and created a function called create_password_reset_request_email, requiring employee name, reset link and expires in as parameters. I then proceeded to create the body of this email using pure HTML and CCS then placed my code into https://jam.dev/utilities/css-inliner-for-email, a tool to convert typical HTML and CCS into compatible email versions. I then placed the newly in lined HTML content into the return statement of the function and used f-strings to place my function parameters in the string itself.
 
-![image](/images/rId62.png)
+![image](../public/images/rId62.png)
 
 As a result of both helper functions being completed, I continued with the development of the password reset request route. I proceeded to make use of the send_html_email function and included the text "Password Reset Request - RotaSyst" as the email subject, the employee email as the recipient email address and the text "Password reset requested for your RotaSyst account. Link expires in 30 minutes." As the fallback text. I then created a variable called html_content and associated it with the invocation of the create_password_reset_request_email function, with the associated appropriate parameters. I then moved on to the sending of a success 200 response – with the message “If an account with this email exists, a password reset link has been sent”. When deploying the email to send the user the reset password URL, my first implementation failed my test dispatch – this was due to the SMTP settings not being configured in the database, I then proceeded to realise that this error was not conveyed to the user in any way so I modified the email delivery code and placed it in a try clause – tasked to catch all exceptions occurring during the building of the email body and its dispatch. I then placed an error response below the except portion of the try clause – enabling communication with the user about the email delivery failure (as seen in Figure 43). 
 
-![image](/images/rId63.png)
+![image](../public/images/rId63.png)
 
-![image](/images/rId64.png)
+![image](../public/images/rId64.png)
 
 With the successful implementation of this route, I continued to the implementation of the token verification route – a route that should accept GET requests with the token as a part of its URL to check its validity prior to password reset submission. I proceeded to initialise this route through the same method as previous routes but included <token> in the URL – allowing me to access the URL content provided in this spot in the route handler, a method previously covered by the technical prototyping. I then proceeded to dispatch a filtered query to PasswordResetToken table, with the token provided as the search term and the conditions of PasswordResetToken.used being False and PasswordResetToken.expires_at being bigger than the current datetime object (see Figure 45). If this query returns nothing, an error response will be sent to the client detailing the error (“Invalid or expired token”).
 
-![image](/images/rId65.png)
+![image](../public/images/rId65.png)
 
-![image](/images/rId66.png)
+![image](../public/images/rId66.png)
 
 Proceeding this, the route then queries the Employee table, gathering further information on the employee via the employee ID provided by the reset tokens payload. And subsequently returns a successful JSON response containing a validity key, employee name key and a expiry time key. 
 
-![image](/images/rId67.png)
+![image](../public/images/rId67.png)
 
-![image](/images/rId68.png)
+![image](../public/images/rId68.png)
 
-![image](/images/rId69.png)
+![image](../public/images/rId69.png)
 
 Following this, I moved on to the creation of the password reset confirmation route which required the inclusion of the reset token in the URL parameters once again. As well as the reset token, this route required the inclusion of the body parameter new password, which I validated to be present and to be over 6 characters (see figure 47). I then subsequently used the same method as the previously developed route to verify the tokens validity and presence and to gather the data associated with the user ID provided by the tokens payload and responded with the same error messages on the failure of these checks. I then proceeded to immediately hash the password provided by the request body and update it in the Employee table record associated with the user and marked the token as used (see figure 48). I then ended the request with a successful JSON response as seen in Figure 49. 
 
-![image](/images/rId70.png)
+![image](../public/images/rId70.png)
 
-![image](/images/rId71.png)
+![image](../public/images/rId71.png)
 
-![image](/images/rId72.png)
+![image](../public/images/rId72.png)
 
-![image](/images/rId73.png)
+![image](../public/images/rId73.png)
 
 As the backend routes were now completed, I started work on the frontend implementations of this feature set. I started with the creation of PasswordResetRequest.jsx, a file located in the Pages directory alongside the Login.jsx file, linked to the route declaration ‘/password-reset-request’ (see figure 50). Once this declaration of the route path was complete, I started building the frontend UI for the password reset page. The UI, which was initially copied from the Login.jsx page for continuity and design consistency reasons, is directly like the Login page, boasting a title and tagline centred above a white box with shadowed boarders containing a form. The differing factor between this UI and that of the Login page was the title of the box and the inclusion of instructional text at the beginning of the boxes content area (see Figure 51). I then proceeded to modify the form, removing the password field from the form, changing the display text of the button to ‘Send Reset Email’, and replacing the hyperlink at the bottom of the page with a hyperlink enabling navigation to return to the login page. 
 
-![image](/images/rId74.png)
+![image](../public/images/rId74.png)
 
 With the main body of the page to request a password reset designed and implemented, I then moved on to the implementation of the JavaScript Logic behind the forms action. In the same way as the Login page, the field data is set on update to a useState hook for constant storage and the form itself is linked to the handleSubmit function through the onSubmit event. For the most part the dispatch of the request to the backend is done in the same way as the Login page, with the exception of the inclusion of the new hooks isSuccess and message – storing the success state and rendering a conditional UI if false, and storing the error message provided by the backend.
 
-![image](/images/rId75.png)
+![image](../public/images/rId75.png)
 
 I then designed and implemented a conditional UI to be rendered if the isSuccess hook has a boolean value of true. The UI maintained the structure of the original password reset page, but with the replacement of ‘Reset Password’ as the card title with ‘Email Sent!’, the inclusion of a green checkmark above the original placement of the text, the instructional text being changed to the contents of the message state, the removal of the input box and label, the replacement of the text in the blue button to ‘Back to Login’ and the inclusion of a secondary grey button with the text ‘Send Another Reset Email’ linking the user back to the Reset Password Request Page through its changing of the success state. 
 
-![image](/images/rId76.png)
+![image](../public/images/rId76.png)
 
 Due to the completion of the password reset request page, I moved on to the creation of the password reset page itself (PasswordReset.jsx), a page only accessible via the inclusion of a token in its URL, facilitated through the inclusion of a URL parameter in the route declaration in the App.jsx file (see Figure 56). 
 
-![image](/images/rId77.png)
+![image](../public/images/rId77.png)
 
-![image](/images/rId78.png)
+![image](../public/images/rId78.png)
 
-![image](/images/rId79.png)
+![image](../public/images/rId79.png)
 
 I then created the component and fetched the token from the URL using the native React Router Dom hook useParams. Following this I created a verifyToken function to be ran on page load or on the event of the token being changed through its calling in a useEffect hook (see Figure 58). This function deploys an HTTP GET request to the ‘/password-reset/verify/<token>’, route with the token from the URL as a URL parameter – to check the validity of the token. On request response, if it is successful sets the tokenValid state as true, populates the employeeName state and expiresAt hook with the data returned and sets isVerifying to false. If the request responds with an error, the tokenValid state is subsequently set to false, and the message state is populated with the response error message.
 
-![image](/images/rId80.png)
+![image](../public/images/rId80.png)
 
-![image](/images/rId81.png)
+![image](../public/images/rId81.png)
 
 I then created three conditionally rendered UIs, with all based on the same UI structure as the previous Login and password reset assosiated pages. The first, rendered if the isVerifying state is true is a direct copy of the Email Sent UI, without the inclusion of the two buttons or the header text, with the tick icon replaced with a spinning loading icon and the instructional text stating ‘verifying reset link…’.
 
 The second conditionally rendered page, being shown only if the `tokenValid` state is set to false, is an almost direct copy of the password reset request success page conditional view, the only changes being the tick changing to a red cross, the header text changing to ‘Invalid Reset Link’, the informational text changing to ‘Invalid or expired token’ and the top blue button text changing to say ‘Request New Reset Link’ and linking to the reset password request page.
 
-![image](/images/rId82.png)
+![image](../public/images/rId82.png)
 
 The final conditionally renderered state, shown only if the success state is true, is a terciary direct copy of the password reset request success conditional view, the differing factors being the header text stating ‘Password Reset Successful!’, the replacement of the instructional text to the request response message using the message state, the secondary line of text stating that ‘You will be redirected to the login page in a few seconds...’ and the inclusion of a singular blue button linking to the login page with the text ‘Go to Login Now’. 
 
-![image](/images/rId83.png)
+![image](../public/images/rId83.png)
 
-![image](/images/rId84.png)
+![image](../public/images/rId84.png)
 
 As a result of the conditional states being implemented, the main page UI was my next task. I again borrowed the UI and form composition from the Login.jsx page, changing minimal details. One such detail being the box header being set to ‘Set New Password’ and the inclusion of two more lines of text with subsequent size decreases – the first stating ‘Hello, ‘ then the name of the logged in user from the employeeName state and the second stating ‘Link expires: ‘ then the expiresAt state normalised through the formatExpiryTime function I created to convert from isoString to human readable string. The final two changes to the original copied UI was the addition of two labeled input fields - the first stating new password and the second to confirm the new password, both writing their contents onChange to the password and confirmPassword states – and the changing of the blue button content to ‘Reset Password’. 
 
-![image](/images/rId85.png)
+![image](../public/images/rId85.png)
 
-![image](/images/rId86.png)
+![image](../public/images/rId86.png)
 
 With the completion of the UIs, I started work on the functionality behind the submission of the set new password form. I created the function handleSubmit (which was linked to the onSubmit attribute of the form tag) and prevented the default functionality of HTML forms – allowing me to have increased customization. I started with field verification, and compared both the confirmPassword and password states against eachother, and with that succeeding checked the length of the password to be above 6 characters long. I then proceeded to deploy a POST request using the JavaScript native fetch API to the ‘/password-reset/confirm/<token>’ endpoint – filling the token value with the token fetched from the current URL path – and including the password states value in the request body. I then checked for request success and if true I set isSuccess to true, populated the message state with the response message and set a redirect to ‘/login’ after 3 seconds. If the request failed, I populated the message state with the request response body. Then for both situations, I set isLoading to false.
 
@@ -617,25 +617,25 @@ With the completion of the UIs, I started work on the functionality behind the s
 
 Due to all the prior outlines of the iteration being met I moved on to testing of the iteration. Due to the many features being implemented in this iteration, many tests are subsequently rewuires to assure full adherance to expected functionality. 
 
-![image](/images/rId87.png)
+![image](../public/images/rId87.png)
 
 The first test taken to assure functionality was in relation to reset password initial requests, in which I tested the dispatch of a reset password request with an email assosiated with an existing account and one with an email linked to no exisiting account. I expect both tests to return the same response, both returning a 200 status code and the same generic response message. Figures 66 and 67 show the response body and status code returned when a request is sent with a valid email address and Figures 68 and 69 show the response body and status code returned in the case of a request being sent with an invalid, unregistered email address.
 
-![image](/images/rId88.png)
+![image](../public/images/rId88.png)
 
-![image](/images/rId89.png)
+![image](../public/images/rId89.png)
 
-![image](/images/rId90.png)
+![image](../public/images/rId90.png)
 
-![image](/images/rId91.png)
+![image](../public/images/rId91.png)
 
-![image](/images/rId92.png)
+![image](../public/images/rId92.png)
 
 The second test I will be conducting will be in relation to the endpoint that checks the validility of password reset tokens, checking that the expected functionality occurs under all circumstances. I will be including both a valid token and invalid token in the URL of the frontend /reset-password/<token> page, with a valid token showing both a HTTP status code of 200 in the network tab and the correct conditional UI and an invalid token showing a 400 HTTP status code response in the network tab and the ‘Invalid Reset Link’ conditional UI. The four figures below (Figures 70, 71, 72 & 73) capture these responses and showcase that the expected functionality is occuring.
 
-![image](/images/rId93.png)
+![image](../public/images/rId93.png)
 
-![image](/images/rId94.png)
+![image](../public/images/rId94.png)
 
 ### Iteration 4: M3, M15 – Employee Management: Creation, Deactivation, Listing & Modification
 
@@ -647,21 +647,21 @@ Further evidence of this iteration directly building upon previous implementatio
 
 When developing the backend, I primarily focused on the implementation of various simplistic CRUD (Create, Read, Update, Delete) routes, such as `POST` & `GET` `‘/employees’` to respectively create and fetch employees, `GET` & `PUT` `‘/employees/<id>’` to fetch one singular employee using their ID and to update the data associated with one specific employee, and `POST` `‘/employees/<id>/suspend’` to suspend an employee using their ID.
 
-![image](/images/rId95.png)
+![image](../public/images/rId95.png)
 
 These various CRUD routes, allowing for differing operational actions to be taken against a user, made use of previously outlined methods of implementation – using the @require_manager decorator on the route declaration enabling the enforcement of access only to authenticated users with managerial permissions (see figure 74), previously discussed hashing helper functions, and basic database queries and operations.
 
-![image](/images/rId96.png)
+![image](../public/images/rId96.png)
 
-![image](/images/rId97.png)
+![image](../public/images/rId97.png)
 
-![image](/images/rId98.png)
+![image](../public/images/rId98.png)
 
-![image](/images/rId99.png)
+![image](../public/images/rId99.png)
 
 In the case of the frontend, a wide range of components was required to be created, including a new managerial dashboard page – in a React route protected by user characteristics. I implemented this using JSX logic inline in the element declaration. I then proceeded to create a separate management only accessible router system, located in the ManagementDashboard.jsx file in the pages directory, allowing this permission check of the endpoint shown in Figure 75 to cover all future management endpoints. I then created a comprehensive sidebar UI in this component (see figure 76), due to stakeholder feedback in the screen design section advising me that the continuation of the navigation bar from the employee dashboard designs had become too cluttered, and implemented React Router Dom sub navigation features to insert the correct page content in the content area of the management navigation component (see figure 77). Duyring the creation of the navigation bar, I significantly struggled  in making sure page content did not render under the sidebar itself, an issue I solved by adding padding to the content rendering area as seen in Figure 77.
 
-![image](/images/rId100.png)
+![image](../public/images/rId100.png)
 
 Following the implementation of the sidebar and management navigation configuration, I then implemented the logic and UI enabling the functionality of the previously developer CRUD endpoints to function in the application. To build these I utilised existing form-handing, request dispatching, modal (popup) systems, and validation patterns to ensure a consistent user experience (see Figure 78), with the only major new UI implementation being the creation of a new employee listing ‘table’ which followed the same UI implementation of the Login box, with a differing aspect ratio – stretched to fit the screen rather than flexed to fit the inner content.
 
@@ -671,11 +671,11 @@ Testing for this iteration focused on the verification of employee management fu
 
 To test the implementation of access control, API endpoints such as `GET /employees` and `PUT /employees/<id>` were accessed using both managerial and non-managerial accounts, which produced the expected outcome – a test that was done more in detail in iteration 2.
 
-![image](/images/rId101.png)
+![image](../public/images/rId101.png)
 
 The functionality of CRUD endpoints themselves were then subsequently tested by creating a new employee record and verifying its presence in the UI employee list, updating specific fields related to that employee and confirming the persistence of the changes after a page refresh (a valid manner in which to test the presence of the newly created information in the database due to the frontend and backend lacking a cache system). The suspension route (POST /employees/<id>/suspend) was tested by suspending an employee account and verifying that the account was unable to authenticate or access protected routes thereafter.
 
-![image](/images/rId102.png)
+![image](../public/images/rId102.png)
 
 As mentioned previously, one issue identified during testing of the UI implementation involved the page content of the management dashboard rendering beneath the sidebar navigation – significantly reducing the useability of the application (see Figure 79). This issue was easily resolved through the inclusion of size-conditional padding and margins within the content rendering area, and subsequent testing confirmed the correct rendering occurring across the management dashboard post-fix (see Figure 80). 
 
@@ -685,45 +685,45 @@ With the base of the management dashboard created iteration five focused on the 
 
 This iteration, once again, built directly upon the previously developed core features such as authentication and permission-based access control. In particular, through the use of the previously developed authorisation decorators, the CRUD routes to manage the deployment of announcements were locked to users with managerial permissions and the announcement viewing router were locked to any authenticated user. This reuse of existing access control logic ensured consistency throughout the application through the standardisation of failure responses and reduced the duplication of security focused code. 
 
-![image](/images/rId103.png)
+![image](../public/images/rId103.png)
 
-![image](/images/rId104.png)
+![image](../public/images/rId104.png)
 
-![image](/images/rId105.png)
+![image](../public/images/rId105.png)
 
 My attention first focused on the backend. Due to the previously implemented Announcements database model, created in Iteration 1, there was minor programmatic implementations to be made, namely the implementation of four routes. PUT ‘/announcements/<ann_id>’, DELETE ‘/announcements/<ann_id>’, POST ‘/announcements’ and GET ‘/announcements’. These routes performed CRUD actions to specific and all announcements, the first modifying an existing announcement according to the provided ID, the second deleting an existing announcement according to the provided ID, the third creating an announcement and the fourth fetching a list of all active announcements and their associated data. Due to the nature of the announcements system needing to be viewable by all users but the creation, updating and deletion of announcements needing to be locked to managerial users only – the first three endpoints made use of the @require_manager decorator while the last endpoint (fetching all active announcements) made use of the @require_auth decorator. 
 
-![image](/images/rId106.png)
+![image](../public/images/rId106.png)
 
 These routes all utilised previously outlined methods in their implementations, with all routes (other than POST ‘/announcements’) being wrappers for database actions. The implementation of the announcement creation route specifically had more technical detail associated with it, requiring the deployment of many emails if required by the submitting user. This was achieved through using the send_html_email function, with the email body being a direct copy of the previously designed email template with text modifications to make it suitable for use in announcement notification. Rather than the creation of a dedicated new email template, the direct copy of the reset password email was used to assure continuity and brand identity between the various emails deployed by the system. 
 
-![image](/images/rId107.png)
+![image](../public/images/rId107.png)
 
 Therefore, with the creation of the backend CRUD routes being complete, I started work on the frontend – initially aiming to create an employee announcements page. Prior to this task being started, I realised the lack of an employee dashboard and navigation system being implemented and turned to my screen designs to implement said component. Due to my prior implementation of a page routing system, I was quickly able to implement 3 employee dashboard placeholder pages (Dashboard, Announcements & Profile) to use in subsequent iterations (see Figure 84), created placeholder components to link to said routes for the time being, and implemented conditional rendering of the UI dependent on the presence of a user object in the aforementioned global user state. 
 
 *Figure 85 - Completed navigation bar for employee dashboard.*
 
-![image](/images/rId108.png)
+![image](../public/images/rId108.png)
 
 Following this I then converted my navigation bar design from the screen design section and implemented it in all three newly created placeholder components, highlighting the appropriate navigation item depending on the page the user was currently on (see Figure 85) and conditionally rendered a fourth highlighted navigation item if the user had managerial permissions, enabling navigation to the newly created management dashboard (see Figure 86).
 
-![image](/images/rId109.png)
+![image](../public/images/rId109.png)
 
-![image](/images/rId110.png)
+![image](../public/images/rId110.png)
 
-![image](/images/rId111.png)
+![image](../public/images/rId111.png)
 
-![image](/images/rId112.png)
+![image](../public/images/rId112.png)
 
 With the completion of the navigation system for the employee dashboard, my attention moved back to the implementation of the employee dashboard announcements page. To begin, below the navigation bar, I created a header element to indicate the user of the page they were currently on, a direct replica of the screen design of the announcements page – with an icon at the top, title in bold text and a tagline below. I then created the conditionally rendered announcement boxes, building on the box design created in Iteration 1 for the Authentication screens. The differing factor in these boxes’ implementation was their width, which were stretched to the length of the container (like Iteration 4) rather than flexed to fit the content of the box itself. Following the screen design, I then implemented the title and content of these boxes and included a smaller element attached to the bottom of the box, stating the posting time and day. Due to the completion of the announcement box design, I mapped this announcement box design to a list of all current announcements – fetched in the same manner as previous requests – through the previously implemented ‘/announcements’ GET route.
 
-![image](/images/rId113.png)
+![image](../public/images/rId113.png)
 
 Each announcement block displayed a title, an urgency indicator, descriptive text, and metadata showing the date and time the announcement was posted. Urgency indicators were implemented using colour-coded labels (green, amber, or red), with the urgent state rendered in red and clearly marked using uppercase text to draw immediate user attention (see Figure 91). This design choice was informed by stakeholder feedback, which emphasised the need for urgent announcements to be visually distinct from routine information.
 
-![image](/images/rId114.png)
+![image](../public/images/rId114.png)
 
-![image](/images/rId115.png)
+![image](../public/images/rId115.png)
 
 Due to the employee view announcements page being complete, I then moved on to the creation of the management dashboard page to deploy, modify and delete announcements. This page was implemented using existing standards – reusing the employee view table to list all announcements and reusing previously implemented form designs to capture the creation and submission data used in the respective requests.
 
@@ -737,9 +737,9 @@ Access control testing for this specific implementation was limited in its scope
 
 When testing the functionality of the announcement system, I created various announcements with various differing attributes – email dispatch, urgency and content being the main focuses – and verified these tasks were carried out correctly. In the case of the email dispatch, this was successful in its implementation due to previous testing carried out in Iteration 3 solidifying this, regarding the urgency indicators – the appropriate chosen coloured indicators were displayed according to the level chosen at announcement creation. Page refreshes were also administered to confirm the persistence of data in the database 
 
-![image](/images/rId116.png)
+![image](../public/images/rId116.png)
 
-![image](/images/rId117.png)
+![image](../public/images/rId117.png)
 
 UI testing revealed an early layout issue in which announcement boxed lacked visual separation between each other. This issue was once again solved by adjusting the margins of the boxes themselves and was a minor fix. 
 
@@ -751,31 +751,31 @@ Iteration six focused on the development of shift scheduling functionality – e
 
 This iteration built directly upon employee management systems created in Iteration 4, relying directly on the existence of employee records, account states, and permission data to ensure shifts could only be assigned to valid and active employees. Additionally, the prior developed authentication and authorisation mechanisms were utilised to restrict shift creation, modification and deletion to management users only, while enabling standard employees to view shifts. 
 
-![image](/images/rId118.png)
+![image](../public/images/rId118.png)
 
-![image](/images/rId119.png)
+![image](../public/images/rId119.png)
 
-![image](/images/rId120.png)
+![image](../public/images/rId120.png)
 
 I initiated development focusing on the backend – prioritising the creation of a comprehensive set of RESTful CRUD API routes to manage shift data. I started with the implementation of POST ‘/shifts’, a route to facilitate the creation of a shift by a managerial user, which was locked to managerial users through the @require_manager decorator and presented the option to ‘Bulk’ create shifts through the is_bulk flag in the request body, the bulk_end_date request body value and recurring_pattern request body value, which allowed a programmatical loop to create multiple shifts from these values (see Figure 96). With the bulk creation loop implemented, I then facilitated the creation of a singular shift through the gathering of the employee data of which the shift creation request was assigned to and the start and end time of the shift, sumsequently creating the shift using a database query in the same way as previous implementations (see Figure 97) and then used this shift creation code for both singular shift creation and bulk shift creation. The final item of implementation for full functionality of this route was the inclusion of email notification dispatch if the send_notification request body flag was included by the requesting user – which was implemented using previously defined functions and email templates such as send_html_email. With the shift creation endpoint completed, the remaining shift CRUD routes (PUT ‘/shifts/<shift_id>’, DELETE ‘/shifts/<shift_id>’ and GET ‘/shifts’) were implemented using previously expendad upon database querying methods and responses due to their nature as being mostly wrappers to display and action data contained in the database. All routes were locked to managerial users through the @require_manager decorator, excluding GET ‘/shifts’ which made use of the @require_auth decorator.
 
-![image](/images/rId121.png)
+![image](../public/images/rId121.png)
 
 When implementing the frontend, my attention initially was focused on the creation of the employee home dashboard page which I previously created the structure for. I implemented four statistic boxes as per the screen designs containing hours worked this month and week and money earnt this month and week – all four currently displaying placeholder data to be implemented subsequent iterations. 
 
 *Figure 99 - Statistic boxes on the employee dashboard home page*
 
-![image](/images/rId122.png)
+![image](../public/images/rId122.png)
 
 I then proceeded to work on a shift calendar component, to be placed directly below the statistic boxes, and built this upon existing implementations of box elements – the differing factor being the calendar box stretching to the width of the page. I then added a title, tagline and view dropdown box at the top of the box header, informing the user of the functionality of the section and enabling the user to view a monthly overview of all shifts if desired. Below this I then implemented two arrow buttons and a centered week beginning and week ending title, allowing the user to cycle between differing weeks or months and view the currently selected week/month. 
 
-![image](/images/rId123.png)
+![image](../public/images/rId123.png)
 
 When building the content of the box, I dynamically rendered a table in differing sizes as per the status of the viewMode state – enabling the content of the box to change alongside the differing views (weekly or monthly). With the top of the box being expanded to hold every day of the week in monthly view and the table being completely transformed in weekly view – with every individual employee down the side and the week dates along the top. 
 
 As a result of the basic weekly and monthly calender view being complete, I implemented the data gathering through the previously implemented `GET ‘/shifts’` route through request methods previously covered and populated the contents of each table column and row with the presence of the shift. 
 
-![image](/images/rId124.png)
+![image](../public/images/rId124.png)
 
 With the implementation of the employee view my focus shifted to the creation of a corresponding management-facing scheduling page within the management dashboard navigation system created in Iteration 4. This page reused the same calendar component to ensure consistency between employee and management views, while extending functionality to include shift creation, modification, and deletion controls. A “Create Shift” action was added to this page, opening a modal-based form that allowed managers to assign shifts to employees using existing form-handling and validation systems (see Figure 102). Bulk shift creation functionality was also exposed through this interface, enabling efficient scheduling of recurring shifts. 
 
@@ -795,19 +795,19 @@ The next iteration, iteration seven, focused on the implementation of a flexible
 
 Building upon existing functionality covered by previous iterations such as authentication and authorisation mechanisms, the tag system management was ensured to only be accessible by managerial users - with standard employee accounts restricted to read only access. 
 
-![image](/images/rId125.png)
+![image](../public/images/rId125.png)
 
 When developing this iteration, I initially focused on the backend, creating four CRUD endpoints interacting with the previously defined and implemented Tag database table/model from Iteration 1. I precedingly created 3 managerial locked endpoints, implemented through the use of the @require_manager decorator (POST ‘/tags’, PUT ‘/tags/<tag_id>’, and DELETE ‘/tags/<tag_id>’) to respectively manage the creation, modification and deletion of tags. I then implemented a fourth GET ‘/tags’ endpoint, protected by the @require_auth decorator, ensuring access to view all active tags was locked to authenticated users. These CRUD routes, excluding the addition of validation as previously implemented, were implemented as wrappers for data interactions – through the taking of actions previously outlined in other Iterations.
 
 Each tag was designed to be an individual database entry, with each shift able to be linked to an existing tag entity. As a result, one tag could have many relationships with differing shift data objects – allowing for easy identification of a purpose of a shift.
 
-![image](/images/rId126.png)
+![image](../public/images/rId126.png)
 
 Due to the creation of the CRUD routes being complete, frontend UI development work commenced, and I built upon the existing system in place for management dashboard navigation and started to populate the tag management page which up to this point held no content other than navigation. I took advantage of existing form-handling logic, modal logic, validation systems and UI components to create the tag page – ensuring that the UI remained consistent with the rest of the projects modules and pages. 
 
-![image](/images/rId127.png)
+![image](../public/images/rId127.png)
 
-![image](/images/rId128.png)
+![image](../public/images/rId128.png)
 
 I copied the shift creation page template and replaced the create shift button with a create tag button which resulted in the opining of a form modal to create a tag. This form, based upon the existing forms throughout the project, took in a tag name and tag colour hex code (which I improved upon due to stakeholder feedback by adding a colour picker, and deployed a request containing the form body to the POST ‘/tags’ endpoint. Below this, I reused the standard content box expanded upon throughout the iterative development cycle and created mini content boxes containing the colour of the tag, the tag title, an edit button and a delete button (see Figure 105) – on the event of the edit button being clicked, a second modal is revealed, identical to that of the create new tag modal the differing factor being its title and tag values being prefilled in the input fields (see Figure 106).
 
@@ -831,23 +831,23 @@ The focus of iteration eight was the implementation of a cover request system, a
 
 This iteration built directly upon the previous iterations, making use of existing functionalities such as the existing shift management system, employee management system, authentication and authorisation system and tag system – relying on existing shift records, employee data, route restriction mechanisms and the assignment of tags to reassigned shifts. 
 
-![image](/images/rId129.png)
+![image](../public/images/rId129.png)
 
 I started development on the backend of the system, making use of the previously implemented CoverRequest database model from Iteration 1, and created 4 basic CRUD routes: GET ‘/cover’ to fetch all current cover requests associated with your account or in the case of a manager fetch all existing cover requests, POST ‘/cover/<cover_id>/accept’ to accept a cover request by cover ID if the request is directed to the requesting user or the request is open to all users, POST ‘/cover/<cover_id>/reject’ to reject a cover request if the request is directed to the requesting user and POST ‘/cover’ to create a new cover request for the specified shift provided in the request body. The above listed routed, all protected by the @require_auth decorator, all interact with the database and perform request body validation in previously outlined ways (see Figure 107). 
 
 Each cover request stores references to the associated shift, the employee who requested, the status of the request and the optional employee requested to cover the shift (shown in Figure 107). Status values were clearly defined to represent pending, approved, or rejected states, allowing consistent handling across both frontend and backend systems. This approach ensured that the cover request workflow remained predictable and auditable.
 
-![image](/images/rId130.png)
+![image](../public/images/rId130.png)
 
 In regard to the frontend implementation of this system, I initially populated the cover request page in the management dashboard, adding a tabbed table to view all cover requests, pending cover requests, accepted cover request and rejected cover requests separately. This was created making use of the existing components used in previous iterations of the system – the main difference being the header of the box (containing the tabs) being transparent rather than having a solid background, allowing the tab system to be more immersive (see Figure 108). This page was purley to oversee cover requests and has no actions throughout the page.
 
-![image](/images/rId131.png)
+![image](../public/images/rId131.png)
 
 A corresponding employee interface was then subsequently developed, adding a new standard box, following the same design as previous iterations and reusing the component directly. The differing factor being the header of the box having no clear divide from the main content body (a minor colour tweak)(see Figure 109). I then added a green button to each shift eligible to request cover for in the shift calender, allowing the user to invoke a modal for each shift directly (see Figure 110). This modal, on submission, dispatched a request to the previously developed create cover request endpoint (see Figure 111). 
 
-![image](/images/rId132.png)
+![image](../public/images/rId132.png)
 
-![image](/images/rId133.png)
+![image](../public/images/rId133.png)
 
 *Figure 110 - Cover request button inside shift item.*
 
@@ -869,33 +869,33 @@ This iteration builds on the previously implemented shift scheduling, user manag
 
 My iteration started with a focus on the development of the required backend routes and functionality, creating CRUD RESTful routes to manipulate, verify and save the data provided by the routes themselves prior to saving to the previously defined database tables in Iteration 1.
 
-![image](/images/rId134.png)
+![image](../public/images/rId134.png)
 
-![image](/images/rId135.png)
+![image](../public/images/rId135.png)
 
 I started by creating a basic CRUD route GET ‘/pto’ which made use of the previously created @require_auth decorator and returned differing responses based on permission level. With manager users being provided with a complete list of all PTO requests currently in the database, and employees only receiving PTO requests linked to their account.
 
-![image](/images/rId136.png)
+![image](../public/images/rId136.png)
 
-![image](/images/rId137.png)
+![image](../public/images/rId137.png)
 
 Following this, I moved on to a more technically challenging endpoints required for the implementation of the PTO system, firstly implementing the route POST ‘/pto/calculate’, which deployed a filtered database query to fetch all shifts within the provided start_date and end_date from the request body (see Figure 113). I then iterated through the returned results, calculating a total of all hours of all shifts returned by the database query (see Figure 114) and returned a JSON object containing this data to the client. 
 
 I then proceeded to develop the POST ‘/pto’ route, a second basic CRUD route to allow the creation of a new PTO entry in the database, using methods previously covered by preceding iterations (see Figure 115).
 
-![image](/images/rId138.png)
+![image](../public/images/rId138.png)
 
-![image](/images/rId139.png)
+![image](../public/images/rId139.png)
 
-![image](/images/rId140.png)
+![image](../public/images/rId140.png)
 
-![image](/images/rId141.png)
+![image](../public/images/rId141.png)
 
 After the easy implementation of the POST ‘/pto’ route I continued with the significantly more technically tasking routes, starting with POST ‘/pto/<pto_id>/approve’, a route locked to managerial users with the @require_auth decorator previously developed in prior iterations, which initially checked the existence of a PTO request with the ID provided in the URL parameter, then proceeded to check for sufficient PTO hours associated with the requesting user if the PTO request is flagged as paid (see Figure 116). Which then proceeds to, in the case of no validation checks failing, set the pto status to approved, create the appropriate PTO tag (either “Paid PTO” or “PTO”) if one does not exist prior (see Figure 117), and applies this tag to every shift asigned to the requesting user between the PTO dates and subsequently deducts PTO hours from the user as the final task to prevent this occuring prior to exceptions (see Figure 118).
 
 The final route to be completed was the POST ‘/pto/<pto_id>/reject’ route, which was access limited to managerial users through its use of the @require_auth decorator. This route validated the state of PTOs existence, then iterated through every existing PTO shift assigned to the requesting user between the provided PTO dates – preventing any edge cases of PTO shifts existing when a PTO request has been rejected after initial approval (see Figure 119). 
 
-![image](/images/rId142.png)
+![image](../public/images/rId142.png)
 
 With the completion of the backend functionality, I started work on the frontend UI to interact with these PTO management endpoints. Starting with the employee dashboard, I created a new box below the calander component and beside the cover request box, an exact replica of the box next to it – with the addition of a green button to open a PTO request form following the same UI design as the rest of the application (see Figure 120). In the box content area, a table list of all PTO requests assigned to the user, pending, approved and rejected, are listed in exactly the same UI pattern as the component beside it – maintaining consistency with earlier features.
 
@@ -919,7 +919,7 @@ The shift management system, developed in Iteration six, was built upon in this 
 
 Initially, I started considering dedicated backend routes to deal with this process, but after careful consideration I decided to make use of existing shift CRUD routes from previous iterations and call them from the client side.
 
-![image](/images/rId143.png)
+![image](../public/images/rId143.png)
 
 Starting this frontend implementation, I created a new component called ReassignmentWizard.jsx to be used by the existing PTO management pages component. On selection of this option, shown when approving a PTO request with conflicts, the system sends a request to the POST ‘/pto/calculate’ route which returns a list of all shifts between the submitted dates in its response. These shifts are then passed into the ReassignmentWizard component to be used in a structured review. The component itself also requires the inclusion of a callback function called onComplete, which is called after all actions on the wizard itself are complete and all calculated reassignments and shift deletions are passed as parameters – this allows all requests to be abstracted to the top-level component of the PTO request page, increasing modularity of the component significantly.
 
@@ -927,9 +927,9 @@ The UI of the wizard was implemented as a multi-step modal interface, building f
 
 Throughout the process of the wizard, the state and storage of reassignments and deletions is purely stored on the client side without applying changes immediately – ensuring no changes to the persistent storage occur prior to process submission and enabling the manager user to have the ability to modify their changes prior to commitment. 
 
-![image](/images/rId144.png)
+![image](../public/images/rId144.png)
 
-![image](/images/rId145.png)
+![image](../public/images/rId145.png)
 
 Upon completion of the wizard, the system executes a controlled sequence of existing API actions. The PTO request is approved first, followed by the deletion of any shifts marked for removal and the creation of replacement shifts for reassigned employees. These values as decided by the user are stored locally in arrays, which the onComplete function iterates through. When iterating through shift deletion the client deploys a request to the DELETE ‘/shifts/<shift_id>’ endpoint deleting every shift using the id provided in the array (see Figure 122). In the case of shift reassignment, rather than sending a PUT request to modify the shift itself, the client iterates through every item in the reassignments array, creating a new shift at the using the original shifts time and tags using the POST ‘/shifts’ endpoint, then proceeding to delete the original shift using the DELETE ‘/shifts/<shift_id>’ endpoint (see Figure 123). 
 
@@ -953,37 +953,37 @@ This iteration directly improved upon the authentication and authorisation syste
 
 Starting this iterations development with the backend, I firstly implemented the clock in and out system – setting the base for the payroll system to be implemented later in this iteration. I firstly created two basic RESTful CRUD endpoints, both pulling data directly from the previously created database models. The first, `GET ‘/clock/upcoming’`, lists all shifts due to occur within the number of minutes configured in the application settings and stored in the Settings model. The second, `GET ‘/clock/current’`, lists all entries associated with the currently authenticated user from the `ClockEntry` table previously created in Iteration 1.
 
-![image](/images/rId146.png)
+![image](../public/images/rId146.png)
 
-![image](/images/rId147.png)
+![image](../public/images/rId147.png)
 
-![image](/images/rId148.png)
+![image](../public/images/rId148.png)
 
 After the implementation of these two simple endpoints, my focus moved to the more technically challenging tasks, the clock in endpoint, the clock out endpoint and the background function to automatically clock users out when they are past the configured overtime amount. Beginning with the POST ‘/clock/in/<shift_id>’ endpoint, the user is verified to not be already clocked in (see Figure 124), then the shift provided in the URL parameters is checked to begin within the configured clock in window (see Figure 125), and finally, on the passing of the checks, creates a new entry in the ClockEntry database model (see Figure 126). 
 
-![image](/images/rId149.png)
+![image](../public/images/rId149.png)
 
-![image](/images/rId150.png)
+![image](../public/images/rId150.png)
 
 Moving on to the POST ‘/clock/out’ endpoint – the route searches for an active clock entry associated with the authenticated user (see Figure 127), proceeds to pull the shift data associated with the clock entry, validates the current time is within the configured max overtime window or within the shift time itself (see Figure 128), then subsequently updates the clock entry in the database with the clock out time and shift statistics (see Figure 129). 
 
-![image](/images/rId151.png)
+![image](../public/images/rId151.png)
 
 *Figure 129 - Updating the clock entry in the database.*
 
-![image](/images/rId152.png)
+![image](../public/images/rId152.png)
 
 Finishing the backend development of the clock in and out system, I created the auto_clock_out_task function, which was configured to be ran every five minutes in the background through its use of Sanic background tasks (see Figure 130). When ran, it deployed a query to the ClockEntry database retrieving all entries without a clock out time and iterated through said entries – running the same process as the clock out function if the entries have exceeded their shift length or max overtime configuration. 
 
 Following this, I chose to implement the frontend UI for these backend implementations. These took the form of a conditionally rendered box appearing above the shift calender when shifts were able to be clocked in to. Once a shift was clocked in, the UI changed to a live countdown of hours and minutes till the shift was over and kept a running total of money earnt while clocked in. Once a shift was clocked out of, this UI disapeared and a modal appeared, following the same UI standards as previous modals, showing the data from the response body of the clockout request in a consise manner. 
 
-![image](/images/rId153.png)
+![image](../public/images/rId153.png)
 
 As a result of the clock in/out functionality being completed, I was able to start work on the payroll system, which was fully locked to administrator users via the @require_manager decorator – which relied on the data provided by clock in/out actions to generate reports. I firstly created the endpoint POST ‘/payroll/generate’, to gather all clock entries within the provided date range, calculate the hours worked of all entries on a per user basis, apply any lunch deductions, retrieve the pay rate associated with the clock entry and return the total pay and clock entries per user for that time period. 
 
-![image](/images/rId154.png)
+![image](../public/images/rId154.png)
 
-![image](/images/rId155.png)
+![image](../public/images/rId155.png)
 
 Following this, I created the POST ‘/payroll/send’ endpoint – which aimed to dispatch emails to the payroll administrator and all users when invoked. This endpoint, iterates through every employee, sending each one an email with their payroll data (provided in the request body by the client) using the previously implemented function send_html_email, then proceeds to send an overall payroll summary to the admin summary email if the presence of payroll_email is confirmed in the Settings database Model.
 
@@ -991,7 +991,7 @@ Finally, I created another background task payroll_automation_task, to be deploy
 
 `payroll_automation_task` function – runs once a day at 9AM, checks if today is payroll day, generates all payroll data from all clock entries from the last month, sends individual payroll emails to employees through iteration, sends an admin summary email if `payroll_email` is configured.
 
-![image](/images/rId156.png)
+![image](../public/images/rId156.png)
 
 For the implementation of the UI for the payroll system, I created the content to be placed on the Payroll page of the management dashboard. This interface, using existing components from previous iterations, included start and end date selectors, allowing managers to generate payroll reports for arbitrary time periods. By default, the date selector automatically populated the previous calendar month, reducing manual input and aligning with standard payroll cycles. Upon report generation, results were displayed in a modal containing a structured table listing each employee and the total hours worked within the selected date range (see Figure 134). 
 
@@ -1017,9 +1017,9 @@ This iteration was directly built upon the existing employee management systems 
 
 In terms of backend changes, this iteration had minimal complex route implementations with the only two new additions being two RESTful CRUD routes, GET ‘/profile’ which returned all non-sensitive data associated with the currently authenticated employee, and PUT ‘/profile’ a route which was effectively a wrapper for an update database query – allowing the authenticated user to modify non sensitive data related to them.
 
-![image](/images/rId157.png)
+![image](../public/images/rId157.png)
 
-![image](/images/rId158.png)
+![image](../public/images/rId158.png)
 
 Contrastingly, the frontend had a significant change – I created the page content for the pre-existing profile page on the employee dashboard – providing users with a clear accessible interface for viewing account information. This implementation used existing UI components such as input fields and cards created in prior iterations (see Figure 135). Editable fields were presented using form inputs with client-side validation to give immediate feedback on incorrect or missing values (see Figure 136). Upon submission, changes were sent to the backend and persisted to the database, with confirmation feedback displayed to the user.
 
@@ -1037,23 +1037,23 @@ Overall, testing confirmed that the profile management functionality was secure,
 
 This final iteration, Iteration thirteen, focused on the implementation of a central audit logging system – to record all significant actions performed within the application. The aim of this iteration was to improve traceability and system transparency through assuring all major actions taken were consistently logged in a standardised format.
 
-![image](/images/rId159.png)
+![image](../public/images/rId159.png)
 
-![image](/images/rId160.png)
+![image](../public/images/rId160.png)
 
 To support this implementation, a structured audit logging approach was created through the initialisation of an AuditActions class (see Figure 136) and a ResourceTypes class (see Figure 137). These classes defined a fixed set of constants to represent all audit logged actions across the platform – holding lists of all actions and resource types and their subsequent string codes – ensuring all entries used consistent terminology and preventing the appearance of different actions taken resulting in different audit log formats.
 
 Following the creation of these classes, I created a reusable backend function, `log_audit_action`, to handle the creation of audit logs throughout the application. This function - which accepted the ID of the user performing the action, the action type (a derivative of the `AuditActions` class), optionally a resource identifier (a derivative of the `ResourceTypes` class) and optional JSON detail data – standardised audit logging logic further through its standardisation of database queries throughout the application.
 
-![image](/images/rId161.png)
+![image](../public/images/rId161.png)
 
 After log_audit_function’s implementation, audit logging was subsequently implemented across the application, with the function being called on all significant system-altering actions, such as management actions, data creation/deletion/modification, approvals and configuration changes. Regular user actions, such as clocking in and out or profile updates, were intentionally excluded to avoid excessive or low-value log entries and to maintain log relevance.
 
-![image](/images/rId162.png)
+![image](../public/images/rId162.png)
 
 On the frontend, audit log visibility was added to the management dashboard. A dedicated audit overview card was introduced (see Figure 138), allowing management users to access further audit records through a modal interface. This modal displayed a paginated list of audit log entries (see Figure 139) and included filtering options, enabling administrators to efficiently review actions by type, resource, or user (see Figure 140) without overwhelming the interface.
 
-![image](/images/rId163.png)
+![image](../public/images/rId163.png)
 
 *Figure 139 - Audit modal pagination*
 

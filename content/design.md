@@ -2,7 +2,7 @@
 
 ## Project Decomposition
 
-![image](/images/rId15.png)
+![image](../public/images/rId15.png)
 
 The system decomposition was done to break the complex application, that is Integrated Workforce Management Platform, into smaller, manageable components with clearly defined responsibilities. This supports maintainability and scalability by allowing each individual part of the system to be designed and implemented independently.
 
@@ -26,7 +26,7 @@ A consistent visual design is used across all screens conceptual mock-ups to ens
 
 ### Login Screen Design
 
-![image](/images/rId16.png)
+![image](../public/images/rId16.png)
 
 The login interface, shown aside in figure 1, is a single content block centred horizontally and vertically on the page. This ensures minimal user confusion and forces all attention to the authentication form without distractions. 
 
@@ -42,13 +42,13 @@ The employee dashboard consists of multiple components and interface elements, e
 
 #### Navigation
 
-![image](/images/rId17.png)
+![image](../public/images/rId17.png)
 
 The employee navigation bar is designed as a consistent reproducible element that appears across all employee pages, providing users with quick access to core functionality and reducing confusion that occurs alongside differing design choices. This conceptual design focuses on layout, usability, and accessibility rather than polished visual styling.
 
 As shown above in figure 2, the navigation bar is minimal and adheres to the styling set out prior - with a white background and grey colour used for action blocks. On the left, the navigation bar displays the projects initials “CM” – reinforcing branding and clearly stating the project in use. To the direct right of this, four main navigation items are presented horizontally: one primary item is highlighted within a blue box – indicating clearly the current page the user is on – while the remaining items make use of the colourway outlined above, with a grey colour shown to indicate the pages that the user is not currently on. Furthermore, items with restricted access are shown on the navigation bar if the user has sufficient permissions, as seen by the inclusion of the “Management” navigation element – this is displayed in green, providing a clear visual distinction between employee area navigation elements and management elements. Its highlight in green further reinforces user confidence and reduces confusion, providing the user with a clear indication through its bright colour that access to the restricted page is available to them. Finally, the right-hand side of the navigation bar includes the user profile picture and username, clearly and consistently indicating the status of the user being authenticated. Beside these indicators, a large red logout button is located, designed for clear visibility through its red colouring being a stark contrast from the white background and its clear white text overlayed, allowing for direct, consistent and easy access to logging out throughout the application.
 
-![image](/images/rId18.png)
+![image](../public/images/rId18.png)
 
 *Figure 3 - Employee navbar showing the dashboard as the active page (blue). Includes project initials, user profile picture, username, and a red logout button.*
 
@@ -56,7 +56,7 @@ For users without management access the navigation bar would be similar, with th
 
 #### Dashboard
 
-![image](/images/rId17.png)
+![image](../public/images/rId17.png)
 
 The mock-up for the employee dashboard page aimed to provide a clear overview of key information and interactive components, allowing employee users to view shifts, view past statistics of time worked and take actions in relation to the assignment of shifts, cover requests and PTO/time off requests. As seen in figure 4 below, the employee dashboard page mock-up is presented with the navigation bar at the top of the page with the current page highlighted – ensuring the consistent access of core functions across the dashboard. 
 
@@ -74,7 +74,7 @@ This layout ensures that employees have key metrics, schedules and all-important
 
 The aim of the announcements page is to provide employees with an overview of all notifications and releases by the management team in a concise, consistent and readable manner. The navigation bar located at the top of the page remains consistent with the rest of the employee pages, with the only difference being the Announcements navigation item being highlighted – indicating it’s the current page.
 
-![image](/images/rId19.png)
+![image](../public/images/rId19.png)
 
 *Figure 5 - Employee announcements page showing the navigation bar with Announcements highlighted, a centred megaphone icon with header text, and announcement blocks with urgency indicators, descriptions, and posted date.*
 
@@ -90,7 +90,7 @@ This design ensures that employees can quickly identify high-priority announceme
 
 The employee profile page aims to provide the user with the ability to view and manage personal, contact and account information. The navigation bar, located at the top of the profile page, remains consistent with the other employee pages, with the Profile navigation item highlighted to indicate the current page the user is on, ensuring that users are aware of their location throughout the application.
 
-![image](/images/rId20.png)
+![image](../public/images/rId20.png)
 
 *Figure 6 - Employee profile page showing navigation bar with Profile highlighted, personal and contact information fields, profile picture, password update form, and account information block.*
 
@@ -110,7 +110,7 @@ Rather than the production of full mock-ups for each page used in the management
 
 Throughout these initial mock-up designs, the management area utilises a horizontal navigation bar at the top of the page, consistent with the navigation method used throughout the employee area. This design choice was made to reduce the differences between the employee and management areas and to increase design continuity. 
 
-![image](/images/rId21.png)
+![image](../public/images/rId21.png)
 
 *Figure 7 - Management area showing the horizontal navigation bar with multiple management pages, active page highlighted in blue, employee dashboard navigation highlighted in green, and user authentication details with logout button.*
 
@@ -122,7 +122,7 @@ Furthermore, the navigation item used to return to the Employee Dashboard is als
 
 #### Page Design
 
-![image](/images/rId22.png)
+![image](../public/images/rId22.png)
 
 The management overview page, shown below in Figure 8, acts as the primary landing page for users with management permissions throughout the webapp and provides a high-level summary of employee and system information alongside direct access to common actions taken by management users. This page was selected as a representative example within the management area, as it encompasses all core layout structures, data presentation methods and input mechanisms used consistently across the remaining pages. 
 
@@ -146,7 +146,7 @@ After the completion of all my initial designs, I presented said designs to my s
 
 #### Employee Area
 
-![image](/images/rId23.png)
+![image](../public/images/rId23.png)
 
 In the case of the Employee Area, the mock-ups were presented to Dylan Sully – a friend with employment in the hospitality industry – who uses competitor products regularly. While generally pleased with the implementation stating that the pages and design had good coherency and the design seemed easy to use, he did explain that the lack of labels for inputs could be confusing for some. He then explained that he tends to use opposing products while preoccupied with other tasks at work, stating that when interrupted, the lack of a label on inputs could cause the loss of his train of thought - leading him to delete the content to view the placeholder, to remind himself of what he was doing.
 
@@ -158,11 +158,11 @@ For the Management Area, the various initial designs were explained and presente
 
 Faruk recommended switching to a sidebar navigation, stating that the navigation should be on the side rather than the top, which would allow all management items to be displayed vertically, improving visibility and responsiveness when accessing multiple management pages. 
 
-![image](/images/rId24.png)
+![image](../public/images/rId24.png)
 
 As a result, the management navigation mock-up was redesigned as a vertical sidebar shown below in Figure 10, maintaining the same colours as in previous navigation implementations while highly increasing usability of the component. Finally, to ensure usability on small screens, a collapsable hamburger menu was implemented for mobile devices, allowing users to click open the sidebar while maintaining all navigation options, as shown below in Figure 11.
 
-![image](/images/rId25.png)
+![image](../public/images/rId25.png)
 
 *Figure 11 - Mobile view of the management area, showing the collapsible hamburger menu which opens the sidebar, maintaining the same navigation options on smaller screens.*
 
