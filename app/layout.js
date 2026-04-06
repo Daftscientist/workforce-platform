@@ -1,8 +1,14 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Integrated Workforce Management Platform — A-Level CS Project",
+  title: {
+    template: '%s - Daft.',
+    default: 'Integrated Workforce Management Platform - Daft.',
+  },
   description: "A system for rota scheduling, time tracking, and payroll automation — NEA write-up by Leo Johnston",
+  icons: {
+    icon: '/assets/daftscientist-mark.png',
+  },
 };
 
 export default function RootLayout({ children }) {

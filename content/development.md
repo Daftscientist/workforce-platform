@@ -26,25 +26,20 @@ To solidify my understanding of Sanic, and assure myself of its suitability for 
 
 ```python
 from sanic import Sanic
+from sanic.response import json
+from sanic.request import Request
+
+app = Sanic("ExampleApp")
+
+@app.get("/hello")
+async def hello(request: Request):
+    return json({"message": "Hello World"})
+
+if __name__ == "__main__":
+    app.run(host="localhost", port=8000, dev=True)
 ```
 
-`from`` sanic.response`` import ``json`
-
-`from sanic.request import Request`
-
-`app = Sanic(``"ExampleApp"``)`
-
-`@app.get("/hello")`
-
-`async` `def` `hello``(request``: Request``):`
-
-    `return`` json({``"message"``: ``"Hello World"``})`
-
-`if`` __name__ == ``"__main__"``:`
-
-`    app.run(host=``"``localhost``"``, port=8000, ``dev=True``)`
-
-This developed prototype demonstrates exactly how Sanic handles HTTP requests (in this case a GET request hosted at the ‘/hello’ endpoint) asynchronously as seen by the use of the async keyword before the function definition, ensuring that the server is not blocked when handling requests. Furthermore, the use of decorator-based routing - @app.get(“hello”) – forces endpoints to be clearly defined and supporting a RESTful structure – in which resources are accessed through standard HTTP methods. Additionally, the frameworks’ ability to run the same server for use in development and production environments – demonstrated through its dev=True parameter, which enables both the debugging UI and automatic file reloading, within the app.run API – further reduces development complexity. Finally, its optional inclusion of Python’s modern type hints through its accessible importable types – evident in the importation from sanic.request import Request and its subsequent use in the route function definition parameters async def hello(request: Request): - increases developer ease of use through text editor integration and readability, highly beneficial when maintaining a large codebase independently.
+This developed prototype demonstrates exactly how Sanic handles HTTP requests (in this case a `GET` request hosted at the `‘/hello’` endpoint) asynchronously as seen by the use of the `async` keyword before the function definition, ensuring that the server is not blocked when handling requests. Furthermore, the use of decorator-based routing - `@app.get(“hello”)` – forces endpoints to be clearly defined and supporting a RESTful structure – in which resources are accessed through standard HTTP methods. Additionally, the frameworks’ ability to run the same server for use in development and production environments – demonstrated through its `dev=True` parameter, which enables both the debugging UI and automatic file reloading, within the `app.run` API – further reduces development complexity. Finally, its optional inclusion of Python’s modern type hints through its accessible importable types – evident in the importation `from sanic.request import Request` and its subsequent use in the route function definition parameters `async def hello(request: Request):` - increases developer ease of use through text editor integration and readability, highly beneficial when maintaining a large codebase independently.
 
 As a result of all prior outlined requirements being met, developer ease of use being prioritised, and its balance between useability and structure. Sanic was chosen as the most appropriate framework for the final implementation of Integrated Workforce Management Platform.
 
@@ -68,25 +63,20 @@ This prototype and example output, shown below, consists of a backend endpoint �
 
 ```python
 from sanic import Sanic
+from sanic.response import json
+from sanic.request import Request
+
+app = Sanic("ExampleApp")
+
+@app.get("/hello")
+async def hello(request: Request):
+    return json({"message": "Hello World"})
+
+if __name__ == "__main__":
+    app.run(host="localhost", port=8000, dev=True)
 ```
 
-`from`` sanic.response`` import ``json`
-
-`from sanic.request import Request`
-
-`app = Sanic(``"ExampleApp"``)`
-
-`@app.get("/hello")`
-
-`async` `def` `hello``(request``: Request``):`
-
-    `return`` json({``"message"``: ``"Hello World"``})`
-
-`if`` __name__ == ``"__main__"``:`
-
-`    app.run(host=``"``localhost``"``, port=8000, ``dev=True``)`
-
-Above is the same minimal implementation of a Sanic development server presenting an exemplar ‘/hello’ route hosted on localhost:8000 ready for requests by the client.
+Above is the same minimal implementation of a Sanic development server presenting an exemplar `‘/hello’` route hosted on `localhost:8000` ready for requests by the client.
 
 Following the server-side code, below is a minimal example of a client-side implementation written in pure HTML and JavaScript, which would be able to be ran on any modern web browser. 
 
@@ -117,7 +107,7 @@ Following the server-side code, below is a minimal example of a client-side impl
 </html>
 ```
 
-This prototype above, requests data from the backend route /hello hosted at localhost:8000, this fetch request is facilitated by JavaScript’s Fetch API – as seen by this line fetch('http://localhost:8000/hello'). It then proceeds to identify and single out the message field provided by the JSON response of the backend and replaces a pre-identified field in the HTML body of the webpage with said message – this is evident in this line document.getElementById('message').textContent = data.message;. 
+This prototype above, requests data from the backend route `/hello` hosted at `localhost:8000`, this fetch request is facilitated by JavaScript’s Fetch API – as seen by this line `fetch('http://localhost:8000/hello')`. It then proceeds to identify and single out the message field provided by the JSON response of the backend and replaces a pre-identified field in the HTML body of the webpage with said message – this is evident in this line `document.getElementById('message').textContent = data.message;`. 
 
 Furthermore, though my inclusion of error handling in the client-side prototype, failed server requests are demonstrated how to be handled effectively in response to connection issues – ensuring issues in a real-world implementation do not break the frontend. This error handling can be seen to be implemented via the catch clause inside the fetch function, shown isolated below:
 
@@ -192,7 +182,7 @@ export default ClockInExampleComponent;
 
 ![image](/images/rId28.gif)
 
-In the above example, the state of a user’s status – being either clocked in or out – can be seen to be managed through the useState hook, imported into the component for use through the line import { useState } from "react";. This allows data to be stored and updated without direct DOM manipulation. When the data’s value changes, React automatically re-renders only the effected component – in this case to switch the buttons label {clockedIn ? "Clock Out" : "Clock In"} and to switch the text shown in the ‘current status’ paragraph element {clockedIn ? "Clocked In" : "Clocked Out"}. Furthermore, these two implementations of text switching between different values, are an example of an additional React feature – inline JSX – allowing for logical decision making to take place inline, alongside traditional HTML tags. In this case the button element triggers the state change through the function toggleClockedIn attributed to the button through the React event onClick. This function, as seen in the line setClockedIn(prevClockedIn => !prevClockedIn); updates the state using the setClockedIn function defined alongside the state data above, a further React feature, through its use of the ! operator, producing the opposite Boolean value to that of the current saved state. 
+In the above example, the state of a user’s status – being either clocked in or out – can be seen to be managed through the `useState` hook, imported into the component for use through the line `import { useState } from "react";`. This allows data to be stored and updated without direct DOM manipulation. When the data’s value changes, React automatically re-renders only the effected component – in this case to switch the buttons label `{clockedIn ? "Clock Out" : "Clock In"}` and to switch the text shown in the ‘current status’ paragraph element `{clockedIn ? "Clocked In" : "Clocked Out"}`. Furthermore, these two implementations of text switching between different values, are an example of an additional React feature – inline JSX – allowing for logical decision making to take place inline, alongside traditional HTML tags. In this case the button element triggers the state change through the function `toggleClockedIn` attributed to the button through the React event `onClick`. This function, as seen in the line `setClockedIn(prevClockedIn => !prevClockedIn);` updates the state using the `setClockedIn` function defined alongside the state data above, a further React feature, through its use of the `!` operator, producing the opposite Boolean value to that of the current saved state. 
 
 This approach, removes the need for explicit DOM queries and updates, exemplifying the previously explained reduction in code repetition and the likelihood of minor errors. Figure 2 demonstrates this behaviour at runtime, showing the component responding dynamically to state changes during user interaction.
 
@@ -316,13 +306,13 @@ async def init_db():
         await conn.run_sync(Base.metadata.create_all)
 ```
 
-In this file above, the general schema for the database user table is defined. The first key implementation of SQLAlchemy specific logic can be seen in the declaration of the base class with Base = declarative_base(), establishing the foundation for all subsequent models – effectively allowing Python classes to be interpreted by the ORM and directly mapped to SQL database tables. This directly enforces structure and consistency between all proceeding tables and reduces the manual boilerplate code significantly. 
+In this file above, the general schema for the database user table is defined. The first key implementation of SQLAlchemy specific logic can be seen in the declaration of the base class with `Base = declarative_base()`, establishing the foundation for all subsequent models – effectively allowing Python classes to be interpreted by the ORM and directly mapped to SQL database tables. This directly enforces structure and consistency between all proceeding tables and reduces the manual boilerplate code significantly. 
 
-The User class (class User(Base):) uses the base variable in its class parameters, causing the User class to be a direct extension of the Base class – creating a users table with several columns: id, name, email, role, and hours_worked, with each column being generated from each class attribute when assigned the Column function. The Column function requires numerous parameters, similarly to that of a regular SQL column definition (id int PRIMARY_KEY),) allowing control over column data types through provided attributes (as seen by the import statement from sqlalchemy import Column, Integer, String, Float), and column rules as seen by nullable=False, unique=True, default=0.0 and primary_key=True. This allows the ORM to enforce data types not only on the database level, but also on an ORM level – reducing chance of data type incompatibility and showcasing SQLAlchemy’s ability to maintain relational integrity.
+The `User` class (`class User(Base):`) uses the base variable in its class parameters, causing the `User` class to be a direct extension of the `Base` class – creating a `users` table with several columns: `id`, `name`, `email`, `role`, and `hours_worked`, with each column being generated from each class attribute when assigned the `Column` function. The `Column` function requires numerous parameters, similarly to that of a regular SQL column definition (`id int PRIMARY_KEY),`) allowing control over column data types through provided attributes (as seen by the import statement `from sqlalchemy import Column, Integer, String, Float`), and column rules as seen by `nullable=False`, `unique=True`, `default=0.0` and `primary_key=True`. This allows the ORM to enforce data types not only on the database level, but also on an ORM level – reducing chance of data type incompatibility and showcasing SQLAlchemy’s ability to maintain relational integrity.
 
-Following this, the asynchronous database connection is configured through create_async_engine(DATABASE_URL, echo=True). This directs SQLAlchemy to the database of choice, in this case being an SQLite database (sqlite+aiosqlite:///./cascade.db). Which is then subsequently utilised in the initialisation of the database session, associated with the variable async_session, in which the previously initiated engine is passed alongside other configuration indicators, allowing for the sessions use throughout the application.
+Following this, the asynchronous database connection is configured through `create_async_engine(DATABASE_URL, echo=True)`. This directs SQLAlchemy to the database of choice, in this case being an SQLite database (`sqlite+aiosqlite:///./cascade.db`). Which is then subsequently utilised in the initialisation of the database session, associated with the variable `async_session`, in which the previously initiated `engine` is passed alongside other configuration indicators, allowing for the sessions use throughout the application.
 
-Finally, the asynchronous function init_db is created, with its interior code beginning the connection with the database directly (through async with engine.begin() as conn:) then running the attributed async run_sync function and passing in the previously defined Base class, choosing to create all tables. Providing a function able to be ran on application startup, ensuring the database is established prior to queries.
+Finally, the asynchronous function `init_db` is created, with its interior code beginning the connection with the database directly (through `async with engine.begin() as conn:`) then running the attributed async `run_sync` function and passing in the previously defined `Base` class, choosing to create all tables. Providing a function able to be ran on application startup, ensuring the database is established prior to queries.
 
 With the database schema and initialisation defined above complete, the file below will reference and use this – showcasing an asynchronous API endpoint, written in Sanic, for retrieving user data and integrating SQLAlchemy sessions with the previously chosen web framework.
 
@@ -375,15 +365,15 @@ if __name__ == "__main__":
 
 Similarly to the programmed implementation presented in Prototype 1, this example is built upon Sanic and is a functional but minimal example of the capabilities of the identified technologies.
 
-Initially, the example imports various methods required for the initialisation of the Sanic server – identically to Prototype 1 – with the only addition being from database_init import init_db, async_session, importing the database initialization function and session state from the previous file.
+Initially, the example imports various methods required for the initialisation of the Sanic server – identically to Prototype 1 – with the only addition being `from database_init import init_db, async_session`, importing the database initialization function and session state from the previous file.
 
-The previously implemented and newly imported function async_session is executed on server startup, through the @app.before_server_start decorator, attributing the function setup_db to the be bran on server startup. This function, while calling the initial setup of the database from database_init.py then proceeds to fill the database with example data, as can be seen by the session.add_all function containing column data entries - User(name="Alice", email="alice@example.com", role="Manager") – with the required fields filled. This allows the example implementation to function, giving the database data to query.
+The previously implemented and newly imported function `async_session` is executed on server startup, through the `@app.before_server_start` decorator, attributing the function `setup_db` to the be bran on server startup. This function, while calling the initial setup of the database from `database_init.py` then proceeds to fill the database with example data, as can be seen by the `session.add_all` function containing column data entries - `User(name="Alice", email="alice@example.com", role="Manager")` – with the required fields filled. This allows the example implementation to function, giving the database data to query.
 
-Following this a route is declared, this is done in the same way as the prior implementation in Prototype 1, with the addition of a route variable – allowing the passing of a user ID into the API call, to get the data associated with a specific user. This is seen through the use of the greater-than and less-than signs in the route definition ("/user/<user_id:int>"), encapsulating the assignment of the data to a variable (in this case called user_id) and its datatype – an integer in this instance. This variable is then added to the function declaration through its attributes - async def get_user(request, user_id): - ready to be injected into the function at runtime alongside the request data by Sanic.
+Following this a route is declared, this is done in the same way as the prior implementation in Prototype 1, with the addition of a route variable – allowing the passing of a user ID into the API call, to get the data associated with a specific user. This is seen through the use of the greater-than and less-than signs in the route definition (`"/user/<user_id:int>"`), encapsulating the assignment of the data to a variable (in this case called `user_id`) and its datatype – an integer in this instance. This variable is then added to the function declaration through its attributes - `async def get_user(request, user_id):` - ready to be injected into the function at runtime alongside the request data by Sanic.
 
-Within the endpoint, an asynchronous session is created using async with async_session() as session. The SQLAlchemy select function constructs a query to retrieve a User object matching the requested user_id, which is executed asynchronously via await session.execute(query). The scalar_one_or_none function is then used to fetch either a single matching result or return None if no user exists, enforcing strict retrieval behaviour and reducing potential errors from unexpected results.
+Within the endpoint, an asynchronous session is created using `async with async_session() as session`. The SQLAlchemy select function constructs a query to retrieve a `User` object matching the requested `user_id`, which is executed asynchronously via `await session.execute(query)`. The `scalar_one_or_none` function is then used to fetch either a single matching result or return `None` if no user exists, enforcing strict retrieval behaviour and reducing potential errors from unexpected results.
 
-Conditional logic, in the form of an if statement, follows this to handle the case of the scalar_one_or_none function returning false, indicating the lack of a user with the provided id. If this is the case, the endpoint responds with a JSON error message and a 404 status code, demonstrating clear error handling in the API. If the query is successful, the user data is returned in a JSON object, showcasing both the ORM and Sanic’s capabilities in following RESTful practices, mapping the returned SQLAlchemy model attributes to JSON keys. Exposing the relational database’s content in a conditional and structured format, validating the capabilities of both the relational database and the ORM.
+Conditional logic, in the form of an if statement, follows this to handle the case of the `scalar_one_or_none` function returning false, indicating the lack of a user with the provided id. If this is the case, the endpoint responds with a JSON error message and a 404 status code, demonstrating clear error handling in the API. If the query is successful, the user data is returned in a JSON object, showcasing both the ORM and Sanic’s capabilities in following RESTful practices, mapping the returned SQLAlchemy model attributes to JSON keys. Exposing the relational database’s content in a conditional and structured format, validating the capabilities of both the relational database and the ORM.
 
 Overall, this prototype validates the suitability of SQLAlchemy through its tight integration with Sanic and as a result proves it to be ideal for use in Integrated Workforce Management Platform. The implementation demonstrates that structured relational data can be defined, initialised, and queried asynchronously without introducing unnecessary complexity. Furthermore, the successful integration between Sanic’s asynchronous request handling and SQLAlchemy’s asynchronous ORM layer confirms that the chosen technologies work in unison in a backend environment. The ability to safely initialise the database on application startup, seed data, and perform queries through RESTful endpoints proves that this architecture is both robust and extensible. As a result, this prototype not only confirms possible compatibility, but also proves that the chosen database and ORM approach is an effective solution for the management of sensitive relational data within Integrated Workforce Management Platform.
 
@@ -395,19 +385,19 @@ Throughout the creation and programmed implementation of Integrated Workforce Ma
 
 To start the development of Integrated Workforce Management Platform, the first core feature I chose to develop was the database due to its role as a foundation for the entire system. Using the technology, I evaluated and chose in the technical prototyping stage, SQLAlchemy, I proceeded to initialise the database.
 
-Firstly, I needed to install the external library, SQLAlchemy, to use throughout the project. To do this, I made use of the package manager that is deployed alongside many Python installers (PIP) and ran pip install SQLAlchemy on the system in which my programming was due to begin. This use of a package manager ensured that I received the most recent publication of said library, enabling me to make full use of it.
+Firstly, I needed to install the external library, SQLAlchemy, to use throughout the project. To do this, I made use of the package manager that is deployed alongside many Python installers (PIP) and ran `pip install SQLAlchemy` on the system in which my programming was due to begin. This use of a package manager ensured that I received the most recent publication of said library, enabling me to make full use of it.
 
-In starting to make use of this library and to initialise the database, a project directory was required to be built out. Inside the root of the project, I created two sub-directories, Frontend and Backend – allowing me to further solidify the abstraction of the two separate aspects of the project. Following this, inside the Backend directory I created an app.py, while empty this file enabled me to plan the structure of the project from the beginning. I then proceeded to create a file called db.py – in which I was finally able to start database initiation. Inside this file, I proceeded to import the required classes and functions provided by SQLAlchemy that were necessary to facilitate the initialisation of the database, the same code that was demonstrated in the technical prototyping phase when testing the validity of SQLAlchemy for the project. This code, as seen in figure 14 below, imports both the create_engine function and the sessionmaker class and uses them in the creation of the database, passing in the database URL as fetched through environment variables or as seen to default to “sqlite:///rota.db”.
+In starting to make use of this library and to initialise the database, a project directory was required to be built out. Inside the root of the project, I created two sub-directories, Frontend and Backend – allowing me to further solidify the abstraction of the two separate aspects of the project. Following this, inside the Backend directory I created an app.py, while empty this file enabled me to plan the structure of the project from the beginning. I then proceeded to create a file called db.py – in which I was finally able to start database initiation. Inside this file, I proceeded to import the required classes and functions provided by SQLAlchemy that were necessary to facilitate the initialisation of the database, the same code that was demonstrated in the technical prototyping phase when testing the validity of SQLAlchemy for the project. This code, as seen in figure 14 below, imports both the `create_engine `function and the `sessionmaker` class and uses them in the creation of the database, passing in the database URL as fetched through environment variables or as seen to default to `“sqlite:///rota.db”`.
 
 ![image](/images/rId33.png)
 
 *Figure 14 - db.py file showing the creation of the database engine and local session of the database.*
 
-This file enables the fundamental access to required database variables throughout the project through the simple importation of the db.py file.
+This file enables the fundamental access to required database variables throughout the project through the simple importation of the `db.py` file.
 
 As a result of the foundation of the database access having been created, I then moved on to the creation and design of the database tables required for Integrated Workforce Management Platform. These database tables, implemented through SQLAlchemy models follow the exact tables outlined in the external storage section above, following the same field names, validations and data types.
 
-In starting to create these tables, I created a new file, models.py, enabling me to keep my database models separate from other parts of the code. To create the basis of this file prior to the creation of these tables/models I was required to import all the datatypes I would need (as outlined in the external storage section) and the base derivative class – both provided by SQLAlchemy. I then proceeded to create a variable called Base to easily access the declarative base class required to inform SQLAlchemy that my classes were to be converted to SQL tables, as seen below in Figure 15.
+In starting to create these tables, I created a new file, models.py, enabling me to keep my database models separate from other parts of the code. To create the basis of this file prior to the creation of these tables/models I was required to import all the datatypes I would need (as outlined in the external storage section) and the base derivative class – both provided by SQLAlchemy. I then proceeded to create a variable called `Base` to easily access the declarative base class required to inform SQLAlchemy that my classes were to be converted to SQL tables, as seen below in Figure 15.
 
 ![image](/images/rId34.png)
 
@@ -415,17 +405,17 @@ In starting to create these tables, I created a new file, models.py, enabling me
 
 ![image](/images/rId35.png)
 
-After this, I proceeded to convert the table designs from the external storage design section into SQLAlchemy compatible classes to be turned into database tables. The overall process consisted of the creation of a new child class with a descriptive title and the inclusion of the Base variable in the class declaration. Following this, in the body of the class a __tablename__ variable was required to be set, indicating to SQLAlchemy the exact table name to set. Then finally, using the data classes provided by SQLAlchemy I was able to create new variables inside the class consisting of the field name (the variable declaration) and the datatype (as the variable definition) with any associated configuration options being available through the parameters of the datatype itself. I then went on to implement this for every table I outlined in the previous sections, below the Employee class can be seen in figure 16. 
+After this, I proceeded to convert the table designs from the external storage design section into SQLAlchemy compatible classes to be turned into database tables. The overall process consisted of the creation of a new child class with a descriptive title and the inclusion of the `Base` variable in the class declaration. Following this, in the body of the class a `__tablename__` variable was required to be set, indicating to SQLAlchemy the exact table name to set. Then finally, using the data classes provided by SQLAlchemy I was able to create new variables inside the class consisting of the field name (the variable declaration) and the datatype (as the variable definition) with any associated configuration options being available through the parameters of the datatype itself. I then went on to implement this for every table I outlined in the previous sections, below the Employee class can be seen in figure 16. 
 
 *Figure 16 - The Employee model, from models.py file.*
 
-I then imported the SessionLocal and all database models into my app.py file, enabling the database to initialise alongside the future code to be implemented in app.py.
+I then imported the `SessionLocal` and all database models into my app.py file, enabling the database to initialise alongside the future code to be implemented in `app.py`.
 
 #### Testing
 
 ![image](/images/rId36.png)
 
-To test this iteration, I ran the app.py file verifying the creation of the database tables and checking to make sure they were composed as expected. Then proceeded to add some placeholder data into the table and verify that insertion and selection operations to the table occurred as expected. The code to test this implementation can be seen below in figure 17. 
+To test this iteration, I ran the `app.py` file verifying the creation of the database tables and checking to make sure they were composed as expected. Then proceeded to add some placeholder data into the table and verify that insertion and selection operations to the table occurred as expected. The code to test this implementation can be seen below in figure 17. 
 
 *Figure 17 - app.py file containing tests to check the creation of the tables and the creation of mock data.*
 
@@ -433,13 +423,13 @@ To test this iteration, I ran the app.py file verifying the creation of the data
 
 This second iteration aims to fulfil the implementation of MUST requirement 1, through the implementation of secure login and session handling, enforcing authentication on routes and laying the groundwork for permission-based access in future iterations.
 
-I started this iteration by laying the groundwork for the implementation of routes, as this was an essential prerequisite to authentication. As per previous technical research prototypes, I initialised the Sanic application in the app.py file, creating the Sanic application and enabling the running of the server through app.run. I then proceeded to make use of the sanic_cors library, which was included with the install of Sanic itself, allowing me to add CORS rules to the Sanic application. Following this, I then registered a Sanic blueprint, allowing me to define and contain my API routes in a file separate to app.py, increasing modularity and separation of concerns. This can be seen below in figure 18.
+I started this iteration by laying the groundwork for the implementation of routes, as this was an essential prerequisite to authentication. As per previous technical research prototypes, I initialised the Sanic application in the app.py file, creating the Sanic application and enabling the running of the server through `app.run`. I then proceeded to make use of the `sanic_cors` library, which was included with the install of Sanic itself, allowing me to add `CORS` rules to the Sanic application. Following this, I then registered a Sanic blueprint, allowing me to define and contain my API routes in a file separate to app.py, increasing modularity and separation of concerns. This can be seen below in figure 18.
 
 ![image](/images/rId37.png)
 
 *Figure 18 - App.py file initialising the Sanic application, starting the server, configuring CORS and registering the routes blueprint.*
 
-As a result of my implementation of the blueprint, a routes.py file had to be created, containing the base code to create said blueprint and enabling the import and reference to the blueprint called API in app.py to function correctly. This can be seen below in figure 19.
+As a result of my implementation of the blueprint, a routes.py file had to be created, containing the base code to create said blueprint and enabling the import and reference to the blueprint called API in `app.py` to function correctly. This can be seen below in figure 19.
 
 ![image](/images/rId38.png)
 
@@ -449,11 +439,11 @@ Now my initialisation of the Sanic app and creation of route handlers had been f
 
 ![image](/images/rId39.png)
 
-In keeping with my requirement of separation of concerns, I chose to separate the authentication management system from the routes themselves and created a new auth.py file and imported this in my routes.py file, enabling it for subsequent use in this prototype. In the auth.py file, I initially created two helper functions, hash_password and verify_password, enabling easy access to hash functionality. These functions made use of hashing algorithms provided by bycrypt, and through their implementation inside these functions bundled configuration options automatically – reducing the chances of issues arising of mismatched hash configurations. 
+In keeping with my requirement of separation of concerns, I chose to separate the authentication management system from the routes themselves and created a new `auth.py` file and imported this in my `routes.py` file, enabling it for subsequent use in this prototype. In the `auth.py` file, I initially created two helper functions, `hash_password` and `verify_password`, enabling easy access to hash functionality. These functions made use of hashing algorithms provided by `bycrypt`, and through their implementation inside these functions bundled configuration options automatically – reducing the chances of issues arising of mismatched hash configurations. 
 
 *Figure 20 - Snippet of the hashing helper functions previously mentioned.*
 
-I then proceeded to create two further helper functions for use in this file that enable the encoding and decoding of session JWT tokens, create_jwt and decode_jwt. Allowing me to standardise the creation of my sessions. When creating these functions, I declared three constant variables to define the JWT secret (used to encode the data), the JWT algorithm (the type of encoding I required) and the session expiry – with 3600 seconds and HS256 being the respective session expiry time and encoding algorithm.
+I then proceeded to create two further helper functions for use in this file that enable the encoding and decoding of session JWT tokens, `create_jwt` and `decode_jwt`. Allowing me to standardise the creation of my sessions. When creating these functions, I declared three constant variables to define the JWT secret (used to encode the data), the JWT algorithm (the type of encoding I required) and the session expiry – with 3600 seconds and HS256 being the respective session expiry time and encoding algorithm.
 
 ![image](/images/rId40.png)
 
@@ -461,13 +451,13 @@ I then proceeded to create two further helper functions for use in this file tha
 
 ![image](/images/rId41.png)
 
-Following this, I then created a get_current_user helper function, enabling me to fetch the current user info from the request headers, making use of the decode_jwt function.
+Following this, I then created a `get_current_user` helper function, enabling me to fetch the current user info from the request headers, making use of the `decode_jwt` function.
 
-*Figure 22 - The get_current_user function in auth.py requesting the session token from the request headers and decoding it.*
+*Figure 22 - The `get_current_user` function in auth.py requesting the session token from the request headers and decoding it.*
 
 ![image](/images/rId42.png)
 
-I then proceeded to create three decorator functions to be placed above route declarations in the route.py file, @require_auth, @require_manager and @require_self_or_manager. The first restricting access to the route if a valid session token is not included in the request, the second restricting access to the route if the user does not have managerial permissions, and the only allowing access to the route if the user is a manager or if the user if requesting their own data. These three decorator functions, which were able to be used in conjunction with each other, enable the easy restriction of HTTP routes per predefined cases – reducing the amount of repeated code needed.
+I then proceeded to create three decorator functions to be placed above route declarations in the route.py file, `@require_auth`, `@require_manager` and `@require_self_or_manager`. The first restricting access to the route if a valid session token is not included in the request, the second restricting access to the route if the user does not have managerial permissions, and the only allowing access to the route if the user is a manager or if the user if requesting their own data. These three decorator functions, which were able to be used in conjunction with each other, enable the easy restriction of HTTP routes per predefined cases – reducing the amount of repeated code needed.
 
 After the creation of these base authentication features, I proceeded to the core implementation of a Login endpoint, which aimed to take in an email and password in the request body, verify the email and password against predefined security and data type standards and return either a success response and the JWT session token or a failure response.
 
@@ -505,7 +495,7 @@ Following this completion of the implementation of the UI design, the functional
 
 To test this iteration I created various situations in which I could predict the excpected functionality of the system and record the outcome. 
 
-Firstly, I provided the login page with the credentials that were present in the Employee database. I excepted a successful request presenting the HTTP status code of 200, the recieval of the data assosiated with the user, the recieval of a session JWT token and a UI redirection to ‘/home’. The Figures below (33 & 34) capture both the network response and resultant data provided by the API, proving the system to function as intended.
+Firstly, I provided the login page with the credentials that were present in the Employee database. I excepted a successful request presenting the HTTP status code of 200, the recieval of the data assosiated with the user, the recieval of a session JWT token and a UI redirection to `‘/home’.` The Figures below (33 & 34) capture both the network response and resultant data provided by the API, proving the system to function as intended.
 
 ![image](/images/rId52.png)
 
@@ -531,7 +521,7 @@ Iteration 3: M1, M19, M15, M18 – Authentication: Password Reset
 
 The goal of this iteration is to build upon the previously started authentication system by building the functionality behind the ‘Forgotten your password?’ button on the Login screen. Delivering secure password reset functionality through expiring one time token-based links sent to the provided email address.
 
-Due to the ResetPasswordToken model and table already existing due to implementation in the initial iteration, the initial focus of this iteration was to create the routes required for this functionality to be accessible. I identified 3 main routes needed to implement this functionality: ‘/password-reset/request’, ‘/reset-password/<token>’, and ‘/password-reset/confirm/<token>’.
+Due to the `ResetPasswordToken` model and table already existing due to implementation in the initial iteration, the initial focus of this iteration was to create the routes required for this functionality to be accessible. I identified 3 main routes needed to implement this functionality: `‘/password-reset/request’`, `‘/reset-password/<token>’`, and `‘/password-reset/confirm/<token>’`.
 
 ![image](/images/rId60.png)
 
@@ -541,7 +531,7 @@ Following this I was required to present the token reset link to the user, throu
 
 ![image](/images/rId61.png)
 
-In the same file, I created a new helper function called send_html_email, which utilizes the built in email library in Python, specifically email.mime.multipart.MIMEMultipart, which enabled me – after I queried the Settings table for SMTP settings and printed a console error if these values were unset – to directly form the email from the provided parameters (subject, html_content, recipients, text_fallback) and dispatch the email according to the settings saved in the Settings table of the database.
+In the same file, I created a new helper function called `send_html_email`, which utilizes the built in `email` library in Python, specifically `email.mime.multipart.MIMEMultipart`, which enabled me – after I queried the Settings table for SMTP settings and printed a console error if these values were unset – to directly form the email from the provided parameters `(subject, html_content, recipients, text_fallback)` and dispatch the email according to the settings saved in the `Settings` table of the database.
 
 Due to this function lacking the functionality to directly generate email content, I was required to store and generate these emails myself – and as a result I created a new file called email_templates.py and created a function called create_password_reset_request_email, requiring employee name, reset link and expires in as parameters. I then proceeded to create the body of this email using pure HTML and CCS then placed my code into https://jam.dev/utilities/css-inliner-for-email, a tool to convert typical HTML and CCS into compatible email versions. I then placed the newly in lined HTML content into the return statement of the function and used f-strings to place my function parameters in the string itself.
 
@@ -605,7 +595,7 @@ I then created the component and fetched the token from the URL using the native
 
 I then created three conditionally rendered UIs, with all based on the same UI structure as the previous Login and password reset assosiated pages. The first, rendered if the isVerifying state is true is a direct copy of the Email Sent UI, without the inclusion of the two buttons or the header text, with the tick icon replaced with a spinning loading icon and the instructional text stating ‘verifying reset link…’.
 
-The second conditionally rendered page, being shown only if the tokenValid state is set to false, is an almost direct copy of the password reset request success page conditional view, the only changes being the tick changing to a red cross, the header text changing to ‘Invalid Reset Link’, the informational text changing to ‘Invalid or expired token’ and the top blue button text changing to say ‘Request New Reset Link’ and linking to the reset password request page.
+The second conditionally rendered page, being shown only if the `tokenValid` state is set to false, is an almost direct copy of the password reset request success page conditional view, the only changes being the tick changing to a red cross, the header text changing to ‘Invalid Reset Link’, the informational text changing to ‘Invalid or expired token’ and the top blue button text changing to say ‘Request New Reset Link’ and linking to the reset password request page.
 
 ![image](/images/rId82.png)
 
@@ -655,7 +645,7 @@ This iteration specifically built directly on top of existing authentication, au
 
 Further evidence of this iteration directly building upon previous implementations was the use of sensitive employee data throughout this iterations implementation and its subsequent fetching from the database models and management system created in Iteration 1. This use of the previously standardised database models ensures encryption standards were followed and data retrieval and storage remained consistent throughout the application.
 
-When developing the backend, I primarily focused on the implementation of various simplistic CRUD (Create, Read, Update, Delete) routes, such as POST & GET ‘/employees’ to respectively create and fetch employees, GET & PUT ‘/employees/<id>’ to fetch one singular employee using their ID and to update the data associated with one specific employee, and POST ‘/employees/<id>/suspend’ to suspend an employee using their ID.
+When developing the backend, I primarily focused on the implementation of various simplistic CRUD (Create, Read, Update, Delete) routes, such as `POST` & `GET` `‘/employees’` to respectively create and fetch employees, `GET` & `PUT` `‘/employees/<id>’` to fetch one singular employee using their ID and to update the data associated with one specific employee, and `POST` `‘/employees/<id>/suspend’` to suspend an employee using their ID.
 
 ![image](/images/rId95.png)
 
@@ -679,7 +669,7 @@ Following the implementation of the sidebar and management navigation configurat
 
 Testing for this iteration focused on the verification of employee management functionality, both the UI and backend, operate correctly, securely and in accordance with the predefined aims and requirements for the system. As a result of this system being a base for future iterations to build upon, both functional and access-based testing was required. 
 
-To test the implementation of access control, API endpoints such as GET /employees and PUT /employees/<id> were accessed using both managerial and non-managerial accounts, which produced the expected outcome – a test that was done more in detail in iteration 2.
+To test the implementation of access control, API endpoints such as `GET /employees` and `PUT /employees/<id>` were accessed using both managerial and non-managerial accounts, which produced the expected outcome – a test that was done more in detail in iteration 2.
 
 ![image](/images/rId101.png)
 
@@ -743,7 +733,7 @@ Where appropriate, existing UI systems such as reusable content blocks and layou
 
 The testing of this iteration focused again on the validation of functionality and access control of the announcement system. Due to the announcements system being the sole form of audited communication provided by the platform, a focus on the correct data being displayed and access controls was essential to assuring full functionality of the communication system.
 
-Access control testing for this specific implementation was limited in its scope, due to its use of previously tested access control mechanisms (the decorators created in Iteration 2). When accessed by a standard employee account, protected endpoints such as POST /announcements correctly returned an unauthorised response, while managerial accounts were able to create and update announcements successfully, confirming correct permission enforcement.
+Access control testing for this specific implementation was limited in its scope, due to its use of previously tested access control mechanisms (the decorators created in Iteration 2). When accessed by a standard employee account, protected endpoints such as `POST /announcements` correctly returned an unauthorised response, while managerial accounts were able to create and update announcements successfully, confirming correct permission enforcement.
 
 When testing the functionality of the announcement system, I created various announcements with various differing attributes – email dispatch, urgency and content being the main focuses – and verified these tasks were carried out correctly. In the case of the email dispatch, this was successful in its implementation due to previous testing carried out in Iteration 3 solidifying this, regarding the urgency indicators – the appropriate chosen coloured indicators were displayed according to the level chosen at announcement creation. Page refreshes were also administered to confirm the persistence of data in the database 
 
@@ -783,7 +773,7 @@ I then proceeded to work on a shift calendar component, to be placed directly be
 
 When building the content of the box, I dynamically rendered a table in differing sizes as per the status of the viewMode state – enabling the content of the box to change alongside the differing views (weekly or monthly). With the top of the box being expanded to hold every day of the week in monthly view and the table being completely transformed in weekly view – with every individual employee down the side and the week dates along the top. 
 
-As a result of the basic weekly and monthly calender view being complete, I implemented the data gathering through the previously implemented GET ‘/shifts’ route through request methods previously covered and populated the contents of each table column and row with the presence of the shift. 
+As a result of the basic weekly and monthly calender view being complete, I implemented the data gathering through the previously implemented `GET ‘/shifts’` route through request methods previously covered and populated the contents of each table column and row with the presence of the shift. 
 
 ![image](/images/rId124.png)
 
@@ -827,7 +817,7 @@ While the introduction and development of this tag system provides little to no 
 
 Testing for this iteration specifically focused on the verification of the expandability of this system and its security and correctness, as it was created to primarily support the implementation of later iterations.
 
-I firstly conducted access control testing, attempting to access create, update and delete tag routes with and without managerial permissions. Protected routes such as POST ‘/tags’ and DELETE ‘/tags/<id>’ correctly returned unauthorised responses when accessed by non-managerial users, while managerial accounts were able to perform all tag management actions successfully.
+I firstly conducted access control testing, attempting to access create, update and delete tag routes with and without managerial permissions. Protected routes such as `POST ‘/tags’` and `DELETE ‘/tags/<id>’` correctly returned unauthorised responses when accessed by non-managerial users, while managerial accounts were able to perform all tag management actions successfully.
 
 Moving on to testing the functionality of the UI and the subsequent associated actions, I created multiple tags, updated their values and deleted several tags – whose changes all were reflected in the UI and persisted after page refreshes and local cache clearances.
 
@@ -961,7 +951,7 @@ The focus of Iteration eleven was the implementation of a time tracking system a
 
 This iteration directly improved upon the authentication and authorisation systems built in previous operations, ensuring the linking of time tracking actions to authenticated users and payroll reporting functionality was restricted to managerial users. Existing employee and shift data structures were reused to maintain consistency across attendance, scheduling, and reporting features.
 
-Starting this iterations development with the backend, I firstly implemented the clock in and out system – setting the base for the payroll system to be implemented later in this iteration. I firstly created two basic RESTful CRUD endpoints, both pulling data directly from the previously created database models. The first, GET ‘/clock/upcoming’, lists all shifts due to occur within the number of minutes configured in the application settings and stored in the Settings model. The second, GET ‘/clock/current’, lists all entries associated with the currently authenticated user from the ClockEntry table previously created in Iteration 1.
+Starting this iterations development with the backend, I firstly implemented the clock in and out system – setting the base for the payroll system to be implemented later in this iteration. I firstly created two basic RESTful CRUD endpoints, both pulling data directly from the previously created database models. The first, `GET ‘/clock/upcoming’`, lists all shifts due to occur within the number of minutes configured in the application settings and stored in the Settings model. The second, `GET ‘/clock/current’`, lists all entries associated with the currently authenticated user from the `ClockEntry` table previously created in Iteration 1.
 
 ![image](/images/rId146.png)
 
@@ -999,7 +989,7 @@ Following this, I created the POST ‘/payroll/send’ endpoint – which aimed 
 
 Finally, I created another background task payroll_automation_task, to be deployed alongside the clock out automation task. This function, due to run daily at 9AM (see Figure 132), checks if the current day matches the configured payroll day, generates payroll data through the same methods as covered above, and subsequently dispatches both individual and summary payroll emals in the same method covered above. 
 
-payroll_automation_task function – runs once a day at 9AM, checks if today is payroll day, generates all payroll data from all clock entries from the last month, sends individual payroll emails to employees through iteration, sends an admin summary email if payroll_email is configured.
+`payroll_automation_task` function – runs once a day at 9AM, checks if today is payroll day, generates all payroll data from all clock entries from the last month, sends individual payroll emails to employees through iteration, sends an admin summary email if `payroll_email` is configured.
 
 ![image](/images/rId156.png)
 
@@ -1023,7 +1013,7 @@ Overall, testing confirmed that the time tracking and payroll system met its fun
 
 Iteration twelve aimed to implement user profile management, enabling all authenticated users to view and update their personal account information. This iteration aimed to reduce managerial workload, by enabling users to manage their own data without the unnecessary step of requesting it do be done via the management dashboard.
 
-This iteration was directly built upon the existing employee management systems implemented in previous iterations, and restricted access to profile CRUD routes via the use of previously implemented access controls through the use of the @require_auth decorator on all routes.
+This iteration was directly built upon the existing employee management systems implemented in previous iterations, and restricted access to profile CRUD routes via the use of previously implemented access controls through the use of the `@require_auth` decorator on all routes.
 
 In terms of backend changes, this iteration had minimal complex route implementations with the only two new additions being two RESTful CRUD routes, GET ‘/profile’ which returned all non-sensitive data associated with the currently authenticated employee, and PUT ‘/profile’ a route which was effectively a wrapper for an update database query – allowing the authenticated user to modify non sensitive data related to them.
 
@@ -1053,7 +1043,7 @@ This final iteration, Iteration thirteen, focused on the implementation of a cen
 
 To support this implementation, a structured audit logging approach was created through the initialisation of an AuditActions class (see Figure 136) and a ResourceTypes class (see Figure 137). These classes defined a fixed set of constants to represent all audit logged actions across the platform – holding lists of all actions and resource types and their subsequent string codes – ensuring all entries used consistent terminology and preventing the appearance of different actions taken resulting in different audit log formats.
 
-Following the creation of these classes, I created a reusable backend function, log_audit_action, to handle the creation of audit logs throughout the application. This function - which accepted the ID of the user performing the action, the action type (a derivative of the AuditActions class), optionally a resource identifier (a derivative of the ResourceTypes class) and optional JSON detail data – standardised audit logging logic further through its standardisation of database queries throughout the application.
+Following the creation of these classes, I created a reusable backend function, `log_audit_action`, to handle the creation of audit logs throughout the application. This function - which accepted the ID of the user performing the action, the action type (a derivative of the `AuditActions` class), optionally a resource identifier (a derivative of the `ResourceTypes` class) and optional JSON detail data – standardised audit logging logic further through its standardisation of database queries throughout the application.
 
 ![image](/images/rId161.png)
 
@@ -1071,7 +1061,7 @@ On the frontend, audit log visibility was added to the management dashboard. A d
 
 Testing for this iteration focused on verifying audit log accuracy, consistency, and visibility.
 
-Functional testing confirmed that audit log entries were created correctly for all intended actions and that each entry contained the appropriate user ID, action type, resource type, resource identifier (if required), and additional details. Validation testing ensured that only predefined constants from the AuditActions and ResourceTypes classes were used when logging actions.
+Functional testing confirmed that audit log entries were created correctly for all intended actions and that each entry contained the appropriate user ID, action type, resource type, resource identifier (if required), and additional details. Validation testing ensured that only predefined constants from the `AuditActions` and `ResourceTypes` classes were used when logging actions.
 
 Frontend testing verified that the audit log modal loaded correctly, pagination functioned as expected, and filters returned accurate subsets of audit data. Performance testing confirmed that pagination prevented excessive data loading and maintained responsiveness even with a large number of log entries.
 

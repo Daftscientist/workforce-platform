@@ -2,38 +2,65 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import MarkdownRenderer from './MarkdownRenderer';
+import { usePathname } from 'next/navigation';
 
-export default function SectionView({ section, content, toc, prev, next, allSections }) {
+export default function SectionShell({ sections, allTocs, children }) {
+  const pathname = usePathname();
   const [activeId, setActiveId] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const observerRef = useRef(null);
 
+  // Derive section info from the current URL
+  const slug = pathname?.match(/\/sections\/([^/]+)/)?.[1] ?? '';
+  const sectionIndex = sections.findIndex(s => s.slug === slug);
+  const section = sectionIndex >= 0 ? sections[sectionIndex] : null;
+  const toc = allTocs[slug] ?? [];
+  const prev = sectionIndex > 0 ? sections[sectionIndex - 1] : null;
+  const next = sectionIndex < sections.length - 1 ? sections[sectionIndex + 1] : null;
+
+  // Reset scroll position and active heading when section changes
   useEffect(() => {
-    const headings = document.querySelectorAll('.prose h1, .prose h2, .prose h3, .prose h4');
-    if (!headings.length) return;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setActiveId('');
+  }, [pathname]);
 
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible.length > 0) {
-          setActiveId(visible[0].target.id);
-        }
-      },
-      { rootMargin: '-48px 0px -55% 0px', threshold: 0 }
-    );
+  // Re-attach IntersectionObserver whenever content changes
+  useEffect(() => {
+    observerRef.current?.disconnect();
 
-    headings.forEach(h => observerRef.current.observe(h));
-    return () => observerRef.current?.disconnect();
-  }, [content]);
+    // rAF gives React time to flush the new section's DOM before we query headings
+    const raf = requestAnimationFrame(() => {
+      const headings = document.querySelectorAll(
+        '.prose h1, .prose h2, .prose h3, .prose h4'
+      );
+      if (!headings.length) return;
+
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          if (visible.length > 0) setActiveId(visible[0].target.id);
+        },
+        { rootMargin: '-48px 0px -55% 0px', threshold: 0 }
+      );
+
+      headings.forEach(h => observerRef.current.observe(h));
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observerRef.current?.disconnect();
+    };
+  }, [pathname]);
 
   const scrollToHeading = (id) => {
     const el = document.getElementById(id);
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 60;
       window.scrollTo({ top: y, behavior: 'smooth' });
+      // Update the URL hash so the link is shareable
+      window.history.pushState(null, '', `${pathname}#${id}`);
     }
     setSidebarOpen(false);
   };
@@ -43,7 +70,6 @@ export default function SectionView({ section, content, toc, prev, next, allSect
 
       {/* ── Topbar ─────────────────────────────────────────────────── */}
       <header className="h-12 border-b border-[#e0d9d0] bg-white fixed top-0 left-0 right-0 z-50 flex items-center px-4 gap-3">
-        {/* Mobile hamburger */}
         <button
           className="lg:hidden p-1.5 -ml-1 rounded hover:bg-[#f5f1ec] text-[#666] transition-colors"
           onClick={() => setSidebarOpen(o => !o)}
@@ -54,7 +80,6 @@ export default function SectionView({ section, content, toc, prev, next, allSect
           </svg>
         </button>
 
-        {/* Logo */}
         <Link href="/sections/analysis/" className="flex items-center gap-2 shrink-0">
           <div className="w-6 h-6 rounded bg-[#9D3511] flex items-center justify-center">
             <span className="text-white text-[10px] font-bold tracking-tight">IW</span>
@@ -65,8 +90,14 @@ export default function SectionView({ section, content, toc, prev, next, allSect
           <span className="text-[13px] font-semibold text-[#1a1a1a] sm:hidden">IWMP</span>
         </Link>
 
-        <span className="text-[#ddd] hidden sm:block">/</span>
-        <span className="text-[13px] text-[#888] hidden sm:block truncate flex-1">{section.title}</span>
+        {section && (
+          <>
+            <span className="text-[#ddd] hidden sm:block">/</span>
+            <span className="text-[13px] text-[#888] hidden sm:block truncate flex-1">
+              {section.title}
+            </span>
+          </>
+        )}
 
         <span className="text-[11px] text-[#ccc] font-mono hidden md:block ml-auto">OCR H446-03</span>
       </header>
@@ -94,11 +125,12 @@ export default function SectionView({ section, content, toc, prev, next, allSect
             Contents
           </div>
 
-          {allSections.map((s) => {
-            const isActive = s.slug === section.slug;
+          {sections.map((s) => {
+            const isActive = s.slug === slug;
+            const sectionToc = allTocs[s.slug] ?? [];
+
             return (
               <div key={s.slug}>
-                {/* Section title row */}
                 <Link
                   href={`/sections/${s.slug}/`}
                   onClick={() => setSidebarOpen(false)}
@@ -117,12 +149,12 @@ export default function SectionView({ section, content, toc, prev, next, allSect
                   {s.title}
                 </Link>
 
-                {/* TOC for the active section */}
-                {isActive && toc.length > 0 && (
+                {/* Expanded TOC — only for the active section */}
+                {isActive && sectionToc.length > 0 && (
                   <div className="mb-2 ml-8 pl-3 border-l-2 border-[#f0d5c4] space-y-px">
-                    {toc.map((item, i) => {
+                    {sectionToc.map((item, i) => {
                       const isActiveHeading = activeId === item.id;
-                      // h1→0, h2→0, h3→10px, h4→20px indent
+                      // h1/h2 → no indent, h3 → 10px, h4 → 20px
                       const indent = Math.max(0, item.level - 2) * 10;
                       return (
                         <button
@@ -149,22 +181,20 @@ export default function SectionView({ section, content, toc, prev, next, allSect
           })}
         </nav>
 
-        {/* Sidebar footer */}
         <div className="shrink-0 px-4 py-3 border-t border-[#e0d9d0] text-[11px] leading-snug">
           <div className="font-medium text-[#999]">Leo Johnston</div>
           <div className="font-mono text-[#c0b4aa]">A-Level CS NEA</div>
         </div>
       </aside>
 
-      {/* ── Main content — pushed right by sidebar on desktop ───────── */}
+      {/* ── Main content — pushed right of sidebar on desktop ───────── */}
       <div className="lg:pl-64 pt-12">
         <main className="max-w-3xl mx-auto px-6 sm:px-10 py-10">
 
-          <article className="prose">
-            <MarkdownRenderer content={content} />
-          </article>
+          {/* Page content (article) injected here by [slug]/page.js */}
+          {children}
 
-          {/* Prev / Next navigation */}
+          {/* Prev / Next section navigation */}
           <nav className="mt-16 pt-8 border-t border-[#e0d9d0] flex items-center justify-between gap-4">
             {prev ? (
               <Link

@@ -1,5 +1,5 @@
-import { getSectionContent, extractTOC, SECTIONS } from '@/lib/content';
-import SectionView from '@/components/SectionView';
+import { getSectionContent, SECTIONS } from '@/lib/content';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
@@ -11,31 +11,23 @@ export async function generateMetadata({ params }) {
   const section = SECTIONS.find(s => s.slug === slug);
   if (!section) return {};
   return {
-    title: `${section.title} — Integrated Workforce Management Platform`,
+    title: section.title,
   };
 }
 
+// The shell (sidebar, topbar, prev/next) lives in ../layout.js (SectionShell).
+// This page only needs to render the article body — the layout stays mounted
+// during client-side navigation so there are no full-page reloads between sections.
 export default async function SectionPage({ params }) {
   const { slug } = await params;
-  const section = SECTIONS.find(s => s.slug === slug);
-  if (!section) notFound();
+  if (!SECTIONS.find(s => s.slug === slug)) notFound();
 
   const content = getSectionContent(slug);
   if (!content) notFound();
 
-  const toc = extractTOC(content);
-  const currentIndex = SECTIONS.findIndex(s => s.slug === slug);
-  const prev = currentIndex > 0 ? SECTIONS[currentIndex - 1] : null;
-  const next = currentIndex < SECTIONS.length - 1 ? SECTIONS[currentIndex + 1] : null;
-
   return (
-    <SectionView
-      section={section}
-      content={content}
-      toc={toc}
-      prev={prev}
-      next={next}
-      allSections={SECTIONS}
-    />
+    <article className="prose">
+      <MarkdownRenderer content={content} />
+    </article>
   );
 }

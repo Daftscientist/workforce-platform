@@ -338,12 +338,12 @@ These changes directly reflect stakeholder feedback, demonstrating iterative des
 
 ##### SQL Database
 
-**Database name****:** rota.db
-**Database type****:** SQLite (or custom via DATABASE_URL environment variable)
+**Database name:** `rota.db`
+**Database type:** SQLite (or custom via `DATABASE_URL` environment variable)
 **Primary key convention**: id (auto-incremented integer for all tables)
-**Encryption****:** Sensitive fields are encrypted with Fernet cipher before storage
+**Encryption:** Sensitive fields are encrypted with Fernet cipher before storage
 
-**Table****:** employees
+**Table:** `employees`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -374,7 +374,7 @@ These changes directly reflect stakeholder feedback, demonstrating iterative des
 • Suspended employees cannot perform any actions requiring authentication
 • All string inputs sanitized to prevent SQL injection
 
-**Table****:** shifts
+**Table:** `shifts`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -399,7 +399,7 @@ These changes directly reflect stakeholder feedback, demonstrating iterative des
 • Cascading delete: when employee deleted, all shifts must be handled (typically deleted or reassigned)
 • Cover_state transitions: null → "requested" → "covered" or "cancelled"
 
-**Table****:** clock_entries
+**Table:** `clock_entries`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -425,7 +425,7 @@ These changes directly reflect stakeholder feedback, demonstrating iterative des
 • Cascading delete: when shift deleted, associated clock entries should be deleted
 • auto_clocked_out flag distinguishes manual vs automatic clock-outs
 
-Table: pto_requests
+Table: `pto_requests`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -449,7 +449,7 @@ Table: pto_requests
 • approver_id required when status is "approved" or "rejected"
 • Cascading delete: when employee deleted, PTO requests should be handled appropriately
 
-**Table****:** cover_requests
+**Table:** `cover_requests`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -470,7 +470,7 @@ Table: pto_requests
 • When accepted, shift.employee_id should be updated to requested_employee_id (or accepter in broadcast case)
 • Cascading delete: when shift deleted, cover requests should be deleted
 
-**Table****:** tags
+**Table:** `tags`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -489,7 +489,7 @@ Table: pto_requests
 • Cascading delete: when tag deleted, tag_id should be set to null in associated shifts (preserve shift data)
 • Tag names should be descriptive for manager organization
 
-**Table****:** audit_logs
+**Table:** `audit_logs`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -512,7 +512,7 @@ Table: pto_requests
 • timestamp cannot be manually set (auto-generated)
 • Immutable: audit logs should never be updated or deleted (append-only)
 
-**Table****:** announcements
+**Table:** `announcements`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -533,7 +533,7 @@ Table: pto_requests
 • created_by must reference valid manager (validate is_manager = true)
 • Cascading considerations: when employee deleted, their announcements may be reassigned or preserved
 
-**Table****:** password_reset_tokens
+**Table:** `password_reset_tokens`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -555,7 +555,7 @@ Table: pto_requests
 • Expired tokens should be cleaned up periodically (not enforced database-side but application-side)
 • Cascading delete: when employee deleted, related reset tokens should be deleted
 
-**Table****:** settings
+**Table:** `settings`
 
 | Field Name | Data Type | Description | Validation |
 | --- | --- | --- | --- |
@@ -718,11 +718,11 @@ Table: pto_requests
 **Primary key convention:** N/A (key-value store)
 **Encryption**: Not applied (tokens rely on server-side JWT validation and expiry)
 
-**Location****:** localStorage
+**Location:** `localStorage`
 
 | Key | Data Type | Description | Validation |
 | --- | --- | --- | --- |
-| rotasyst_user  | JSON string | Stores auth session { token, user_id, email, is_manager } | Token validated/expired server-side; cleared on logout or on parse error |
+| rotasyst_user  | JSON string | Stores auth session `{ token, user_id, email, is_manager }` | Token validated/expired server-side; cleared on logout or on parse error |
 
 ## Algorithms
 
@@ -735,29 +735,29 @@ This algorithm, encompassing logic on both the client and server, defines the wa
 #### Client-Side Logic
 
 - **On the event of a user navigating to the application or the event of a session expiry:**
-- Verify the presence of an existing session token in LocalStorage
+- Verify the presence of an existing session token in `LocalStorage`
 - To validate the presence of the token, send a minimal request to the server to verify its validity.
 - On the event of a token not being present, being expired, or invalid:
 - Remove the existing data and perform a navigation action to the Login page.
 - As the token is valid, request associated user data from the server, initialize the global application state – populating it with the previously requested data, then perform a navigation action to the main employee dashboard page.
-- **On the event of a submission of ****the user login form****:**
+- **On the event of a submission of the user login form:**
 - Verify the presence of content in the email and password fields, if empty do not deploy request
 - Send the provided credentials to the server login endpoint.
 - Upon the receival of a response, determine success or failure through the associated HTTP code with 200 being successful and providing a session token, and 4xx indicating an error.
-- On the event of a successful response, store the returned session token in a secure manner in LocalStorage and in the global state – enforcing its attachment and presence in all future requests via the Authorization header.
+- On the event of a successful response, store the returned session token in a secure manner in `LocalStorage` and in the global state – enforcing its attachment and presence in all future requests via the `Authorization` header.
 - On the event of a failed response, determine the cause of the response failure through examination of the specific 4xx error code returned, and display the attached human-readable error message to the user and facilitate further user attempts.
 - **On the event of a submission of the user password reset form:**
 - Verify the presence of text and its contents in the email field of the email input element, checking against email recognition standards such as the presence of a valid domain and @ symbol. If failed, prevent the submission of a server request and facilitate further user attempts.
 - Deploy a password-reset request to the server, providing in the request body the email provided by the user, indicating to the server to initiate a password reset.
 - Upon the receival of a response, which will always be a ‘successful’ request (in adherence with security practices), display this confirmation to the user.
 - Display an informative message to the user, indicating a reset link will be sent to the inputted email if said email is valid.
-- **On the event of the deployment of a request to a protected**** server**** ****route:**
+- **On the event of the deployment of a request to a protected server route:**
 - Automatically provision the attachment of the stored session token in the Authentication header prior to the request deployment.
 - Preparation to handle 401 (Unauthorized) and 403 (forbidden) response codes by clearing the token stored, routing the user to the Login page and informing the user of their lack of permissions.
 - In the event of role specific user elements existing, (e.g. the manager dashboard): these should only be rendered on the event of the stored session token indicating the user is a manager – this is additional to previous authentication checks.
 #### Server-Side Logic
 
-- **On the event of ****a user login request being received:**
+- **On the event of a user login request being received:**
 - Identify and store the email and password from the request body.
 - Query the user database to find the employee record matching the email.
 - If found, use a secure comparison function to verify the password against the stored passwords hash.
@@ -783,7 +783,7 @@ This algorithm, encompassing logic on both the client and server, defines the wa
 - Return a success message and prompt the user to log in with the new password.
 #### Testing
 
-- **Valid Login****:**
+- **Valid Login:**
 - Enter the correct email and password combination and submit the form.
 - Confirm the initialisation of a session and the required protected pages are loaded.
 - **Invalid/Expired Sessions:**
@@ -805,26 +805,26 @@ This algorithm governs the manner in which sensitive data are protected at rest 
 
 #### Client-Side Logic
 
-- **On the event**** of**** sensitive information**** being inputted****:**
+- **On the event of sensitive information being inputted:**
 - Validate inputs (presence and format) and submit them over secure requests to the backend.
 - Avoid storing sensitive values in local caches beyond what is needed for the current form session.
-- **On the event of sensitive data being required to be displayed****:**
+- **On the event of sensitive data being required to be displayed:**
 - Request the necessary data from the server using the current session token.
 - Render sensitive fields only if the user’s role permits it (e.g., managers); otherwise, hide or show a placeholder.
 - If the server responds with insufficient permissions, hide restricted fields and show a brief explanation or fallback message.
-- **On the event of sensitive fields being modified by the user****:**
+- **On the event of sensitive fields being modified by the user:**
 - Prefill only what the role allows; prevent client-side editing of restricted fields for non-authorised users.
 - Submit changes to the server; on success, refresh the view from server data to ensure consistency.
-- **On the event of a permission error****:**
+- **On the event of a permission error:**
 - For access-denied responses, do not display sensitive content; guide the user to permitted actions.
 #### Server-Side Logic
 
-- **On the event of a request being received that ****manipulates**** sensitive data:**
+- **On the event of a request being received that manipulates sensitive data:**
 - Validate the data received in the body against expected data types, presence and format.
 - Return descriptive human and machine-readable error codes and messages on the event of a validation failure.
 - Per field containing sensitive data, encrypt (or hash if required) on its revival – do this prior to its manipulation or persistence in variables in the backend to adhere to security standards.
 - Store non-sensitive fields as provided, negating encryption or hashing steps, after data validation.
-- **On the event of ****a request being received requesting ****sensitive data:**
+- **On the event of a request being received requesting sensitive data:**
 - Determine the nature of the data requested by the user and associate with the permission level required to access said data.
 - Only gather and decrypt the data that is available to the requesting user, do not decrypt or return data which does not adhere to their permission level.
 - Construct the response body, returning only the data the user requested and is available to them as per permissions.
@@ -833,10 +833,10 @@ This algorithm governs the manner in which sensitive data are protected at rest 
 - Reuse the key consistently throughout encryption and decryption operations.
 #### Testing
 
-- **Encrypt when writing****:**
+- **Encrypt when writing:**
 - Create or update a database record with sensitive fields.
 - Verify that the storage of this data in the database is not in plaintext format and is unreadable.
-- **Display of Sensitive data****:**
+- **Display of Sensitive data:**
 - View the same page or request the same route as a manager.
 - Verify that sensitive protected data is inaccessible to you if without the required permissions and that the data renders correctly if with the required permissions.
 #### Justification
@@ -851,11 +851,11 @@ The algorithm below coordinates the initialisation and termination of shifts bet
 
 - **On the event of an upcoming shift:**
 - Request a list of clock-in eligible shifts through the provisioned server route – display their start and end times and input elements enabling the user to clock in.
-- **On the event of ****user clocking in:**
+- **On the event of user clocking in:**
 - Send a clock-in request to the server.
 - If successful, update the UI state of the shift to be clocked in and show current shift details.
 - If failed, display the human readable reason to the user (either, too early, already clocked in or ineligible shift).
-- **When presenting ****current clocked-in shift status:**
+- **When presenting current clocked-in shift status:**
 - Replace the UI clock in button with a countdown till the shift is over, present the user with a clock-out button and display the overtime allowance and lunch allowance.
 - **On the event of a user clocking out:**
 - Deploy a clock out request to the server-side, including the shift ID.
@@ -882,16 +882,16 @@ The algorithm below coordinates the initialisation and termination of shifts bet
 - Persist the clock-out time, lunch deduction flag, and overtime minutes; return a summary (total worked hours, lunch deducted, overtime minutes) to the client.
 #### Testing
 
-- **Clock In Window****:**
+- **Clock In Window:**
 - Attempt to clock-in within the preconfigured clock-in window – should produce a successful action.
 - Attempt to clock-in outside the preconfigured clock-in window – should produce a clear rejection in the form of an error message and code both on the client and server side.
-- **Clock-Out & Calculations****:**
+- **Clock-Out & Calculations:**
 - Work for longer or right up to the preconfigured lunch deduction threshold, then proceed to clock out. Confirm the deduction of the preset lunch duration occurs.
 - Work beyond the overtime threshold – confirm the recording of overtime minutes separately to that of regular worked hours.
 - **Edge Cases:**
 - Clock-in to a shift that spans over midnight – verify that the calculated hours and associated deductions and increases are correct.
 - Stay clocked-in past the preconfigured overtime window – confirm the system automatically clocks the user out.
-- **Visual Shift Status****:**
+- **Visual Shift Status:**
 - Confirm the presence of a currently working shift window on the client when the user is clocked in. 
 - Confirm the countdown, clock out button and money earnt counters are accurate when compared to the server-side record after clock out.
 #### Justification
@@ -931,7 +931,7 @@ This pair of algorithms define the manner in which employee cover requests are h
 - If a target employee is specified, verify they exist in the system and that they do not have existing shifts that clash with the provided shift.
 - Record the cover request as pending with the requester ID, shift ID, target employee ID (if provided), and timestamp.
 - Return a success confirmation to the client.
-- **On the event of a****n**** available cover request being received:**
+- **On the event of an available cover request being received:**
 - Query all pending cover requests where either the current user is the target or no target is specified (open requests).
 - Exclude requests created by the current user and all requests that clash with the current users existing shifts.
 - Return the filtered list with requester details, shift information, and request status.
@@ -952,15 +952,15 @@ This pair of algorithms define the manner in which employee cover requests are h
 - Return a successful rejection confirmation to the client.
 #### Testing
 
-- **Request Cover Request Creation****:**
+- **Request Cover Request Creation:**
 - Create a cover request (both targeted and open requests) and confirm the status is automatically set to pending.
-- **Eligibility and listing of requests****:**
+- **Eligibility and listing of requests:**
 - View all available requests as an employee who has had a targeted request sent to them – confirm visibility.
 - View requests as an employee without any targeted requests aimed at them – confirm only open requests are shown.
-- **Acceptance/rejection****:**
+- **Acceptance/rejection:**
 - Accept a pending request – confirm the reassignment of the shift and the status of the request becomes accepted.
 - Reject a request – confirm this action fails if the request is open and in the case of a targeted request its state becomes rejected.
-- **Edge Cases****:**
+- **Edge Cases:**
 - Attempt to accept the same open request from two accounts – confirm that only one account can accept it.
 - Check audit log in the manager view for evidence of the shift reassignment.
 #### Justification
@@ -1020,10 +1020,10 @@ These sets of algorithms manage the approval, submission and rejection of Paid T
 - Return a success confirmation to the client.
 #### Testing
 
-- **Request Submission****:**
+- **Request Submission:**
 - Submit unpaid PTO request – confirm the request is set to pending.
 - Submit paid PTO with insufficient PTO balance – confirm automatic rejection by the system.
-- **Approval****:**
+- **Approval:**
 - Approve unpaid PTO – confirm the shifts within the rage are marked and visible in the rota.
 - Approve paid PTO – confirm the PTO balance decreases after acceptance, and the application of tags to the affected shifts.
 #### Justification
@@ -1078,7 +1078,7 @@ This comprehensive algorithm automates the monthly payroll process through its c
 - Return processing results (total processed, emails sent, failures) for monitoring and troubleshooting.
 #### Testing
 
-- **Payday Trigger****:**
+- **Payday Trigger:**
 - Confirm the algorithm initiates on the configured payday.
 - Confirm the lack of actions taken by the algorithm on days that are not the configured payday.
 - **Calculations:**
@@ -1114,7 +1114,7 @@ This algorithm outlines the way in which the comprehensive application wide audi
 - **When a critical action occurs (called throughout the system):**
 - Record a standardized audit entry containing:
   - User ID of the actor performing the action.
-  - Action type using predefined constants (e.g., employee_created, shift_updated, pto_approved, cover_request_accepted).
+  - Action type using predefined constants (e.g., `employee_created`, `shift_updated`, `pto_approved`, `cover_request_accepted`).
   - Resource type being affected (e.g., employee, shift, announcement, settings).
   - Resource ID of the specific item affected (if applicable).
   - Timestamp.
@@ -1167,13 +1167,13 @@ This algorithm, focused solely on the client (frontend) side of the project, def
 - If a token exists, send a lightweight “session check” request to validate it.
   - If valid: initialise the app state with user ID, role, and saved preferences, route to the main dashboard.
   - If invalid or missing, clear the data and route to the login screen.
-- **Initial data ****loading****:**
+- **Initial data loading:**
 - For authenticated users: request initial data (e.g., announcements, upcoming shifts, profile summary) using the session token.
 - For unauthenticated users: load only public assets and login/reset views.
 - **UI setup:**
 - Attach global situation handlers (e.g., auth error interceptor to catch 401/403 and redirect to login).
 - Prevent the execution of non-critical data fetches until after the page renders to keep startup fast.
-- **General Application Management****:**
+- **General Application Management:**
 - Show a loading state while session validation and initial data load are in progress.
 - On data failures, offer a retry; on auth failures, prompt re-login.
 - Ensure role-based UI elements (manager features) render only after role is confirmed; keep them hidden/disabled otherwise.
@@ -1197,7 +1197,7 @@ This algorithm standardises the methods in which the Sanic backend (server-side)
 
 - **On the receival of any HTTP request:**
 - Identify and store headers, query parameters and data stored in the request body for later use.
-- If present, extract the session token from the Authorization header and store for later use.
+- If present, extract the session token from the `Authorization` header and store for later use.
 - **Authentication verification:**
 - If the endpoint requires authentication, verify the token's validity, signature, and expiry.
 - If the token is missing, invalid, or expired, return a 401 (Unauthorized) error with a clear message.
@@ -1234,5 +1234,4 @@ This algorithm standardises the methods in which the Sanic backend (server-side)
 
 A consistent validation process, as exampled in this algorithm, reduces inconsistencies and unknown occurrences across endpoints and ensures the behaviour of the system is predictable – a necessary feature when paired with a separate client implementation. Clear error messages enable legitimate users to be informed of issues with submissions while withholding sensitive information from attackers. Therefore, with the completion of this algorithm, the “MUST” requirements of Integrated Workforce Management Platform can be seen to be all fulfilled, and the programs main functions are covered by the above algorithms and as a result can be considered complete.
 
-- add testing per algorithm then at the bottom.
 
