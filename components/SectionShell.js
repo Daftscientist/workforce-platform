@@ -81,9 +81,11 @@ export default function SectionShell({ sections, allTocs, children }) {
         </button>
 
         <Link href="/sections/analysis/" className="flex items-center gap-2 shrink-0">
-          <div className="w-6 h-6 rounded bg-[#9D3511] flex items-center justify-center">
-            <span className="text-white text-[10px] font-bold tracking-tight">IW</span>
-          </div>
+          <img
+            src="/assets/daftscientist-mark.png"
+            alt="Daft."
+            className="w-6 h-6 rounded"
+          />
           <span className="text-[13px] font-semibold text-[#1a1a1a] hidden sm:block leading-none">
             Integrated Workforce Management Platform
           </span>
