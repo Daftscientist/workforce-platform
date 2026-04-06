@@ -28,11 +28,11 @@ Browse the Markdown files directly:
 | 05 · Evaluation | [`content/evaluation.md`](./content/evaluation.md) | Project success, limitations, future development |
 | 06 · Appendices | [`content/appendices.md`](./content/appendices.md) | Testing transcript, bibliography |
 
-Images referenced throughout are in [`public/images/`](./public/images/).
+Images are stored in [`public/images/`](./public/images/) and referenced with relative paths (`../public/images/`), so they render correctly both here on GitHub and in the styled site.
 
 ### Option 2 — Read as a styled site (recommended)
 
-The same content is served as a Next.js static site on Cloudflare Pages, with a sticky table of contents, VS Code Dark+ syntax highlighting, and proper image/table rendering.
+The same content is served as a Next.js static site on Cloudflare Pages, with a persistent sidebar, SPA-style navigation (no page reloads between sections), VS Code Dark+ syntax highlighting, and shareable deep-link URLs via `#heading-id` hashes.
 
 👉 **[Open the write-up site](https://nea.daftscientist.dev/)**
 
@@ -50,11 +50,18 @@ The same content is served as a Next.js static site on Cloudflare Pages, with a 
 │   └── appendices.md
 │
 ├── public/
-│   └── images/       # All figures and screenshots from the write-up (149 images)
+│   ├── images/       # All figures and screenshots (149 images)
+│   ├── assets/       # Site assets (favicon)
+│   └── _redirects    # Cloudflare Pages: / → /sections/analysis/
 │
-├── app/              # Next.js App Router — the site that renders content/
-├── components/       # React components (SectionView, MarkdownRenderer)
-└── lib/              # Content reader and TOC extractor
+├── app/              # Next.js App Router
+│   └── sections/
+│       ├── layout.js # Persistent shell (sidebar + topbar, stays mounted across sections)
+│       └── [slug]/   # Per-section page (just the article body)
+├── components/
+│   ├── SectionShell.js   # Client shell — sidebar, TOC, SPA navigation
+│   └── MarkdownRenderer.js
+└── lib/              # Content reader and TOC extractor (with duplicate-ID deduplication)
 ```
 
 ---
