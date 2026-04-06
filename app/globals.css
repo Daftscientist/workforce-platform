@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #9D3511;
+  --accent-dark: #68230B;
+  --accent-light: #c44a1c;
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+/* Typography */
+body {
+  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #1a1a1a;
+}
+
+/* Prose styles for document content */
+.prose {
+  max-width: none;
+}
+
+.prose h1 {
+  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.4rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+.prose h2 {
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.prose h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent);
+  margin-top: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.prose h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.prose h6 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+  color: #2a2a2a;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose ul li {
+  margin-bottom: 0.3rem;
+  color: #2a2a2a;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose strong {
+  font-weight: 700;
+  color: #111;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85em;
+  background: #f0ede8;
+  border: 1px solid #e0dcd5;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  color: var(--accent-dark);
+}
+
+/* Code blocks — VS Code Dark+ */
+.prose pre {
+  background: #1e1e1e;
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  border: 1px solid #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.825rem;
+  color: #d4d4d4;
+  line-height: 1.6;
+}
+
+/* highlight.js VS Code Dark+ overrides */
+.hljs { background: #1e1e1e; color: #d4d4d4; }
+.hljs-keyword { color: #569cd6; }
+.hljs-built_in { color: #4ec9b0; }
+.hljs-type { color: #4ec9b0; }
+.hljs-literal { color: #569cd6; }
+.hljs-number { color: #b5cea8; }
+.hljs-operator { color: #d4d4d4; }
+.hljs-punctuation { color: #d4d4d4; }
+.hljs-property { color: #9cdcfe; }
+.hljs-regexp { color: #d16969; }
+.hljs-string { color: #ce9178; }
+.hljs-char.escape_ { color: #d7ba7d; }
+.hljs-subst { color: #d4d4d4; }
+.hljs-symbol { color: #d4d4d4; }
+.hljs-variable { color: #9cdcfe; }
+.hljs-variable.language_ { color: #569cd6; }
+.hljs-variable.constant_ { color: #4fc1ff; }
+.hljs-title { color: #dcdcaa; }
+.hljs-title.class_ { color: #4ec9b0; }
+.hljs-title.function_ { color: #dcdcaa; }
+.hljs-params { color: #9cdcfe; }
+.hljs-comment { color: #6a9955; }
+.hljs-doctag { color: #608b4e; }
+.hljs-meta { color: #9b9b9b; }
+.hljs-attr { color: #9cdcfe; }
+.hljs-attribute { color: #ce9178; }
+.hljs-name { color: #569cd6; }
+.hljs-section { color: #dcdcaa; }
+.hljs-tag { color: #808080; }
+.hljs-addition { background: #144212; color: #9ecf9e; }
+.hljs-deletion { background: #3b0d0d; color: #cf9191; }
+.hljs-selector-tag { color: #d7ba7d; }
+.hljs-selector-id { color: #9cdcfe; }
+.hljs-selector-class { color: #d7ba7d; }
+.hljs-selector-attr { color: #d7ba7d; }
+.hljs-selector-pseudo { color: #d7ba7d; }
+.hljs-template-tag { color: #569cd6; }
+.hljs-template-variable { color: #9cdcfe; }
+.hljs-link { color: #ce9178; }
+.hljs-quote { color: #6a9955; }
+
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  display: block;
+}
+
+.prose table thead tr {
+  background: var(--accent);
+  color: white;
+}
+
+.prose table thead th {
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid var(--accent-dark);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.prose table tbody tr {
+  border-bottom: 1px solid #e8e2db;
+}
+
+.prose table tbody tr:nth-child(even) {
+  background: #f5f1ec;
+}
+
+.prose table tbody tr:hover {
+  background: #ede7de;
+}
+
+.prose table tbody td {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid #e0d9d0;
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+/* Images */
+.prose img {
+  max-width: 100%;
+  border-radius: 4px;
+  border: 1px solid #e0dcd5;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  margin: 1rem auto;
+  display: block;
+}
+
+/* Caption paragraphs: p containing only an em element starting with "Figure" */
+.prose p:has(> em:only-child) {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #696464;
+  margin-top: -0.5rem;
+  margin-bottom: 1.25rem;
+  font-style: normal;
+}
+.prose p:has(> em:only-child) em {
+  font-style: normal;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  color: #555;
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f0ede8; }
+::-webkit-scrollbar-thumb { background: #c8b9a8; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
