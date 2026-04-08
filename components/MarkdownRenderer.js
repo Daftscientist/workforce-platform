@@ -26,11 +26,12 @@ export default function MarkdownRenderer({ content }) {
           } else if (src?.startsWith('/images/')) {
             resolvedSrc = `${BASE}${src}`;
           }
+          const needsInvert = resolvedSrc?.includes('rId15.png');
           return (
             <img
               src={resolvedSrc}
               alt={alt || ''}
-              className="max-w-full rounded border border-[rgba(76,76,75,0.15)] mx-auto block my-4"
+              className={`max-w-full rounded border border-[rgba(76,76,75,0.15)] mx-auto block my-4${needsInvert ? ' invert' : ''}`}
               style={{ maxHeight: '600px', objectFit: 'contain' }}
               loading="lazy"
             />
