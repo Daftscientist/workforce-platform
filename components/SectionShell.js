@@ -28,7 +28,6 @@ export default function SectionShell({ sections, allTocs, children }) {
   useEffect(() => {
     observerRef.current?.disconnect();
 
-    // rAF gives React time to flush the new section's DOM before we query headings
     const raf = requestAnimationFrame(() => {
       const headings = document.querySelectorAll(
         '.prose h1, .prose h2, .prose h3, .prose h4'
@@ -59,19 +58,18 @@ export default function SectionShell({ sections, allTocs, children }) {
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 60;
       window.scrollTo({ top: y, behavior: 'smooth' });
-      // Update the URL hash so the link is shareable
       window.history.pushState(null, '', `${pathname}#${id}`);
     }
     setSidebarOpen(false);
   };
 
   return (
-    <div className="min-h-screen bg-[#faf9f7]">
+    <div className="min-h-screen bg-[#151515]">
 
       {/* ── Topbar ─────────────────────────────────────────────────── */}
-      <header className="h-12 border-b border-[#e0d9d0] bg-white fixed top-0 left-0 right-0 z-50 flex items-center px-4 gap-3">
+      <header className="h-12 border-b border-[rgba(76,76,75,0.15)] bg-[#151515] fixed top-0 left-0 right-0 z-50 flex items-center px-4 gap-3">
         <button
-          className="lg:hidden p-1.5 -ml-1 rounded hover:bg-[#f5f1ec] text-[#666] transition-colors"
+          className="lg:hidden p-1.5 -ml-1 rounded hover:bg-[rgba(72,72,73,0.1)] text-[#4c4c4b] transition-colors"
           onClick={() => setSidebarOpen(o => !o)}
           aria-label="Toggle sidebar"
         >
@@ -84,30 +82,30 @@ export default function SectionShell({ sections, allTocs, children }) {
           <img
             src="/assets/daftscientist-mark.png"
             alt="Daft."
-            className="w-6 h-6 rounded"
+            className="w-5 h-5 rounded"
           />
-          <span className="text-[13px] font-semibold text-[#1a1a1a] hidden sm:block leading-none">
+          <span className="text-[13px] font-semibold text-[#fefefe] hidden sm:block leading-none">
             Integrated Workforce Management Platform
           </span>
-          <span className="text-[13px] font-semibold text-[#1a1a1a] sm:hidden">IWMP</span>
+          <span className="text-[13px] font-semibold text-[#fefefe] sm:hidden">IWMP</span>
         </Link>
 
         {section && (
           <>
-            <span className="text-[#ddd] hidden sm:block">/</span>
-            <span className="text-[13px] text-[#888] hidden sm:block truncate flex-1">
+            <span className="text-[rgba(76,76,75,0.5)] hidden sm:block">/</span>
+            <span className="text-[13px] text-[#4c4c4b] hidden sm:block truncate flex-1">
               {section.title}
             </span>
           </>
         )}
 
-        <span className="text-[11px] text-[#ccc] font-mono hidden md:block ml-auto">OCR H446-03</span>
+        <span className="text-[11px] text-[#4c4c4b] font-mono hidden md:block ml-auto">OCR H446-03</span>
       </header>
 
       {/* ── Mobile sidebar overlay ──────────────────────────────────── */}
       {sidebarOpen && (
         <div
-          className="lg:hidden fixed inset-0 top-12 z-40 bg-black/20"
+          className="lg:hidden fixed inset-0 top-12 z-40 bg-black/40"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -116,14 +114,14 @@ export default function SectionShell({ sections, allTocs, children }) {
       <aside
         className={`
           fixed top-12 left-0 z-40 h-[calc(100vh-48px)] w-64
-          bg-white border-r border-[#e0d9d0] flex flex-col overflow-hidden
+          bg-[#151515] border-r border-[rgba(76,76,75,0.15)] flex flex-col overflow-hidden
           transition-transform duration-200 ease-in-out
           lg:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         <nav className="flex-1 overflow-y-auto py-4 px-2">
-          <div className="px-3 mb-3 text-[10px] font-mono uppercase tracking-widest text-[#c0b4aa]">
+          <div className="px-3 mb-3 text-[10px] font-mono uppercase tracking-widest text-[#4c4c4b]">
             Contents
           </div>
 
@@ -140,12 +138,12 @@ export default function SectionShell({ sections, allTocs, children }) {
                     flex items-center gap-2 px-3 py-2 rounded-md text-[13px] font-medium
                     transition-colors duration-150 mb-0.5
                     ${isActive
-                      ? 'bg-[#fdf0eb] text-[#9D3511]'
-                      : 'text-[#555] hover:bg-[#f5f1ec] hover:text-[#2a2a2a]'
+                      ? 'bg-[rgba(72,72,73,0.12)] text-[#fefefe]'
+                      : 'text-[#bdbcbd] hover:bg-[rgba(72,72,73,0.06)] hover:text-[#fefefe]'
                     }
                   `}
                 >
-                  <span className={`font-mono text-[10px] shrink-0 w-5 ${isActive ? 'text-[#c44a1c]' : 'text-[#ccc]'}`}>
+                  <span className={`font-mono text-[10px] shrink-0 w-5 ${isActive ? 'text-[#bdbcbd]' : 'text-[#4c4c4b]'}`}>
                     {s.number}
                   </span>
                   {s.title}
@@ -153,10 +151,9 @@ export default function SectionShell({ sections, allTocs, children }) {
 
                 {/* Expanded TOC — only for the active section */}
                 {isActive && sectionToc.length > 0 && (
-                  <div className="mb-2 ml-8 pl-3 border-l-2 border-[#f0d5c4] space-y-px">
+                  <div className="mb-2 ml-8 pl-3 border-l border-[rgba(76,76,75,0.2)] space-y-px">
                     {sectionToc.map((item, i) => {
                       const isActiveHeading = activeId === item.id;
-                      // h1/h2 → no indent, h3 → 10px, h4 → 20px
                       const indent = Math.max(0, item.level - 2) * 10;
                       return (
                         <button
@@ -167,8 +164,8 @@ export default function SectionShell({ sections, allTocs, children }) {
                             block w-full text-left text-[11.5px] py-0.5 px-1 rounded
                             leading-snug transition-colors duration-100
                             ${isActiveHeading
-                              ? 'text-[#9D3511] font-semibold'
-                              : 'text-[#aaa] hover:text-[#555]'
+                              ? 'text-[#fefefe] font-medium'
+                              : 'text-[#4c4c4b] hover:text-[#bdbcbd]'
                             }
                           `}
                         >
@@ -183,32 +180,31 @@ export default function SectionShell({ sections, allTocs, children }) {
           })}
         </nav>
 
-        <div className="shrink-0 px-4 py-3 border-t border-[#e0d9d0] text-[11px] leading-snug">
-          <div className="font-medium text-[#999]">Leo Johnston</div>
-          <div className="font-mono text-[#c0b4aa]">A-Level CS NEA</div>
+        <div className="shrink-0 px-4 py-3 border-t border-[rgba(76,76,75,0.15)] text-[11px] leading-snug">
+          <div className="font-medium text-[#bdbcbd]">Leo Johnston</div>
+          <div className="font-mono text-[#4c4c4b]">A-Level CS NEA</div>
         </div>
       </aside>
 
-      {/* ── Main content — pushed right of sidebar on desktop ───────── */}
+      {/* ── Main content ───────────────────────────────────────────── */}
       <div className="lg:pl-64 pt-12">
         <main className="max-w-3xl mx-auto px-6 sm:px-10 py-10">
 
-          {/* Page content (article) injected here by [slug]/page.js */}
           {children}
 
           {/* Prev / Next section navigation */}
-          <nav className="mt-16 pt-8 border-t border-[#e0d9d0] flex items-center justify-between gap-4">
+          <nav className="mt-16 pt-8 border-t border-[rgba(76,76,75,0.15)] flex items-center justify-between gap-4">
             {prev ? (
               <Link
                 href={`/sections/${prev.slug}/`}
-                className="group flex items-center gap-3 text-sm text-[#666] hover:text-[#9D3511] transition-colors"
+                className="group flex items-center gap-3 text-sm text-[#4c4c4b] hover:text-[#fefefe] transition-colors"
               >
                 <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 <div>
-                  <div className="text-[11px] text-[#bbb] font-mono">Previous</div>
-                  <div className="font-semibold group-hover:text-[#9D3511] transition-colors">{prev.title}</div>
+                  <div className="text-[11px] text-[#4c4c4b] font-mono">Previous</div>
+                  <div className="font-semibold">{prev.title}</div>
                 </div>
               </Link>
             ) : <div />}
@@ -216,11 +212,11 @@ export default function SectionShell({ sections, allTocs, children }) {
             {next ? (
               <Link
                 href={`/sections/${next.slug}/`}
-                className="group flex items-center gap-3 text-sm text-[#666] hover:text-[#9D3511] transition-colors text-right"
+                className="group flex items-center gap-3 text-sm text-[#4c4c4b] hover:text-[#fefefe] transition-colors text-right"
               >
                 <div>
-                  <div className="text-[11px] text-[#bbb] font-mono">Next</div>
-                  <div className="font-semibold group-hover:text-[#9D3511] transition-colors">{next.title}</div>
+                  <div className="text-[11px] text-[#4c4c4b] font-mono">Next</div>
+                  <div className="font-semibold">{next.title}</div>
                 </div>
                 <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

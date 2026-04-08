@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --accent: #9D3511;
-  --accent-dark: #68230B;
-  --accent-light: #c44a1c;
-  --font-serif: var(--font-serif);
-  --font-mono: var(--font-mono);
+  --onyx: #151515;
+  --charcoal: #4c4c4b;
+  --charcoal2: #484849;
+  --silver: #bdbcbd;
+  --white: #fefefe;
 }
 
 /* Typography */
 body {
-  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-  font-size: 16px;
-  line-height: 1.75;
-  color: #1a1a1a;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--silver);
+  background: var(--onyx);
 }
 
 /* Prose styles for document content */
@@ -22,55 +23,55 @@ body {
 }
 
 .prose h1 {
-  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 0.4rem;
+  font-family: 'Gilroy', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--white);
+  border-bottom: 1px solid rgba(76,76,75,0.2);
+  padding-bottom: 0.5rem;
   margin-top: 2.5rem;
   margin-bottom: 1.25rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.3px;
 }
 
 .prose h2 {
-  font-size: 1.45rem;
-  font-weight: 600;
-  color: var(--accent);
+  font-family: 'Gilroy', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--white);
   margin-top: 2.25rem;
   margin-bottom: 0.75rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.2px;
 }
 
 .prose h3 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--accent-dark);
+  color: var(--white);
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
 .prose h4 {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
-  font-style: italic;
-  color: var(--accent);
+  color: var(--silver);
   margin-top: 1.4rem;
   margin-bottom: 0.4rem;
 }
 
 .prose h5 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--silver);
   margin-top: 1.2rem;
   margin-bottom: 0.3rem;
 }
 
 .prose h6 {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--accent-dark);
+  color: var(--charcoal);
   margin-top: 1rem;
   margin-bottom: 0.3rem;
 }
@@ -78,7 +79,7 @@ body {
 .prose p {
   margin-bottom: 1rem;
   line-height: 1.8;
-  color: #2a2a2a;
+  color: var(--silver);
 }
 
 .prose ul {
@@ -89,7 +90,7 @@ body {
 
 .prose ul li {
   margin-bottom: 0.3rem;
-  color: #2a2a2a;
+  color: var(--silver);
 }
 
 .prose ol {
@@ -99,8 +100,8 @@ body {
 }
 
 .prose strong {
-  font-weight: 700;
-  color: #111;
+  font-weight: 600;
+  color: var(--white);
 }
 
 .prose em {
@@ -109,23 +110,22 @@ body {
 
 .prose code {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.85em;
-  background: #f0ede8;
-  border: 1px solid #e0dcd5;
-  border-radius: 3px;
+  font-size: 0.82em;
+  background: rgba(72,72,73,0.2);
+  border: 1px solid rgba(76,76,75,0.15);
+  border-radius: 4px;
   padding: 0.1em 0.35em;
-  color: var(--accent-dark);
+  color: var(--silver);
 }
 
-/* Code blocks — VS Code Dark+ */
+/* Code blocks */
 .prose pre {
-  background: #1e1e1e;
-  border-radius: 6px;
+  background: rgba(72,72,73,0.12);
+  border-radius: 8px;
   padding: 1.25rem 1.5rem;
   overflow-x: auto;
   margin: 1.25rem 0;
-  border: 1px solid #333;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border: 1px solid rgba(76,76,75,0.15);
 }
 
 .prose pre code {
@@ -133,13 +133,13 @@ body {
   border: none;
   padding: 0;
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.825rem;
+  font-size: 0.82rem;
   color: #d4d4d4;
   line-height: 1.6;
 }
 
-/* highlight.js VS Code Dark+ overrides */
-.hljs { background: #1e1e1e; color: #d4d4d4; }
+/* highlight.js VS Code Dark+ */
+.hljs { background: transparent; color: #d4d4d4; }
 .hljs-keyword { color: #569cd6; }
 .hljs-built_in { color: #4ec9b0; }
 .hljs-type { color: #4ec9b0; }
@@ -184,41 +184,42 @@ body {
 .prose table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   margin: 1.25rem 0;
   overflow-x: auto;
   display: block;
 }
 
 .prose table thead tr {
-  background: var(--accent);
-  color: white;
+  background: rgba(72,72,73,0.2);
 }
 
 .prose table thead th {
   padding: 0.6rem 0.9rem;
   text-align: left;
   font-weight: 600;
-  border: 1px solid var(--accent-dark);
-  font-size: 0.85rem;
+  color: var(--white);
+  border: 1px solid rgba(76,76,75,0.2);
+  font-size: 0.825rem;
   letter-spacing: 0.02em;
 }
 
 .prose table tbody tr {
-  border-bottom: 1px solid #e8e2db;
+  border-bottom: 1px solid rgba(76,76,75,0.12);
 }
 
 .prose table tbody tr:nth-child(even) {
-  background: #f5f1ec;
+  background: rgba(72,72,73,0.06);
 }
 
 .prose table tbody tr:hover {
-  background: #ede7de;
+  background: rgba(72,72,73,0.1);
 }
 
 .prose table tbody td {
   padding: 0.55rem 0.9rem;
-  border: 1px solid #e0d9d0;
+  border: 1px solid rgba(76,76,75,0.12);
+  color: var(--silver);
   vertical-align: top;
   line-height: 1.5;
 }
@@ -226,18 +227,17 @@ body {
 /* Images */
 .prose img {
   max-width: 100%;
-  border-radius: 4px;
-  border: 1px solid #e0dcd5;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(76,76,75,0.15);
   margin: 1rem auto;
   display: block;
 }
 
-/* Caption paragraphs: p containing only an em element starting with "Figure" */
+/* Caption paragraphs */
 .prose p:has(> em:only-child) {
   text-align: center;
-  font-size: 0.875rem;
-  color: #696464;
+  font-size: 0.85rem;
+  color: var(--charcoal);
   margin-top: -0.5rem;
   margin-bottom: 1.25rem;
   font-style: normal;
@@ -248,15 +248,15 @@ body {
 
 /* Blockquotes */
 .prose blockquote {
-  border-left: 3px solid var(--accent);
+  border-left: 2px solid rgba(76,76,75,0.3);
   padding-left: 1rem;
-  color: #555;
+  color: var(--charcoal);
   font-style: italic;
   margin: 1rem 0;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #f0ede8; }
-::-webkit-scrollbar-thumb { background: #c8b9a8; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar-track { background: rgba(72,72,73,0.1); }
+::-webkit-scrollbar-thumb { background: var(--charcoal); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--silver); }

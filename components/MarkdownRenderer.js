@@ -30,7 +30,7 @@ export default function MarkdownRenderer({ content }) {
             <img
               src={resolvedSrc}
               alt={alt || ''}
-              className="max-w-full rounded border border-[#e0dcd5] shadow-sm mx-auto block my-4"
+              className="max-w-full rounded border border-[rgba(76,76,75,0.15)] mx-auto block my-4"
               style={{ maxHeight: '600px', objectFit: 'contain' }}
               loading="lazy"
             />
@@ -39,7 +39,7 @@ export default function MarkdownRenderer({ content }) {
 
         table({ children }) {
           return (
-            <div className="overflow-x-auto my-5 rounded border border-[#e0d9d0] shadow-sm">
+            <div className="overflow-x-auto my-5 rounded border border-[rgba(76,76,75,0.15)]">
               <table>{children}</table>
             </div>
           );
@@ -52,7 +52,7 @@ export default function MarkdownRenderer({ content }) {
               href={href}
               target={isExternal ? '_blank' : undefined}
               rel={isExternal ? 'noopener noreferrer' : undefined}
-              className="text-[#9D3511] underline decoration-[#f0c8b4] underline-offset-2 hover:decoration-[#9D3511] transition-colors"
+              className="text-[#bdbcbd] underline decoration-[rgba(76,76,75,0.4)] underline-offset-2 hover:text-[#fefefe] hover:decoration-[#bdbcbd] transition-colors"
             >
               {children}
             </a>
